@@ -1,25 +1,10 @@
-import { useState } from "react";
-import CategoryList from "./components/CategoryList";
-import ProductGrid from "./components/ProductGrid";
-import { ProductQuery } from "./hooks/useProducts";
+import CartView from "./views/cart/CartView";
+import ProductView from "./components/ProductView";
 import "./App.css";
 
 function App() {
-  const [productQuery, setProductQuery] = useState<ProductQuery>(
-    {} as ProductQuery
-  );
-
-  return (
-    <>
-      <CategoryList
-        selectedCategory={productQuery.category}
-        onSelectCategory={(category) =>
-          setProductQuery({ ...productQuery, category })
-        }
-      />
-      <ProductGrid productQuery={productQuery} />
-    </>
-  );
+  //  return <ProductView />;
+  return <CartView />;
 }
 
 export default App;

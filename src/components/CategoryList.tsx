@@ -1,9 +1,10 @@
 import {
+  Button,
+  Heading,
+  HStack,
   List,
   ListItem,
-  ListIcon,
-  OrderedList,
-  UnorderedList,
+  Spinner,
 } from "@chakra-ui/react";
 import useCategories from "../hooks/useCategories";
 
@@ -13,17 +14,38 @@ interface Props {
 }
 
 function CategoryList({ selectedCategory, onSelectCategory }: Props) {
-  const { data: categories } = useCategories();
+  const { data, error, isLoading } = useCategories();
+
+  if (error) return null;
+
+  if (isLoading) return <Spinner />;
+
+  const categories = ["", ...data];
 
   return (
-    <List>
-      <ListItem onClick={() => onSelectCategory("")}>All products</ListItem>
-      {categories.map((category) => (
-        <ListItem key={category} onClick={() => onSelectCategory(category)}>
-          {category}
-        </ListItem>
-      ))}
-    </List>
+    <>
+      <Heading fontSize="2xl" marginBottom={3}>
+        Categories
+      </Heading>
+      <List>
+        {categories.map((category) => (
+          <ListItem key={category} paddingY="5px">
+            <HStack>
+              <Button
+                fontSize="lg"
+                fontWeight={category === selectedCategory ? "bold" : "normal"}
+                textAlign="left"
+                variant="link"
+                whiteSpace="normal"
+                onClick={() => onSelectCategory(category)}
+              >
+                {category ? category : "All products"}
+              </Button>
+            </HStack>
+          </ListItem>
+        ))}
+      </List>
+    </>
   );
 }
 

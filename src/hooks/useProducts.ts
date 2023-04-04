@@ -2,6 +2,7 @@ import useData from "./useData";
 
 export interface ProductQuery {
   category: string;
+  searchText: string;
 }
 
 export interface Product {
