@@ -3,7 +3,7 @@ import PriceTag from "./PriceTag";
 import ProductMeta from "./ProductMeta";
 import QuantitySelect from "./QuantitySelect";
 
-interface CartItem {
+export interface CartItemData {
   id: string;
   price: number;
   currency: string;
@@ -14,11 +14,11 @@ interface CartItem {
 }
 
 interface Props {
-  item: CartItem;
+  item: CartItemData;
   isGiftWrapping?: boolean;
   onChangeQuantity?: (quantity: number) => void;
   onClickGiftWrapping?: () => void;
-  onClickDelete?: () => void;
+  onClickDelete: (id: string) => void;
 }
 
 function CartItem({
@@ -54,8 +54,8 @@ function CartItem({
         />
         <PriceTag price={item.price} currency={item.currency} />
         <CloseButton
-          aria-label={`Delete ${name} from cart`}
-          onClick={onClickDelete}
+          aria-label={`Delete ${item.name} from cart`}
+          onClick={() => onClickDelete(item.id)}
         />
       </Flex>
 

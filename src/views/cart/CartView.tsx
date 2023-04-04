@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -7,11 +8,17 @@ import {
   Stack,
   useColorModeValue as mode,
 } from "@chakra-ui/react";
-import CartItem from "./CartItem";
+import CartItem, { CartItemData } from "./CartItem";
 import OrderSummary from "./OrderSummary";
-import { cartData } from "../../data/cartData";
+import { cartData as initialCartData } from "../../data/cartData";
 
 function CartView() {
+  const [cartData, setCartData] = useState<CartItemData[]>([]);
+
+  useEffect(() => {
+    setCartData([...initialCartData]);
+  }, []);
+
   return (
     <Box
       maxW={{ base: "3xl", lg: "7xl" }}
@@ -26,12 +33,21 @@ function CartView() {
       >
         <Stack spacing={{ base: "8", md: "10" }} flex="2">
           <Heading fontSize="2xl" fontWeight="extrabold">
-            Shopping Cart (3 items)
+            Shopping Cart{" "}
+            {cartData.length > 0
+              ? "(" + cartData.length + "items)"
+              : " is empty"}
           </Heading>
 
           <Stack spacing="6">
             {cartData.map((item) => (
-              <CartItem key={item.id} item={item} />
+              <CartItem
+                key={item.id}
+                item={item}
+                onClickDelete={(id: string) =>
+                  setCartData(cartData.filter((data) => data.id !== id))
+                }
+              />
             ))}
           </Stack>
         </Stack>
