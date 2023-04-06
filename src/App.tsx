@@ -1,17 +1,30 @@
-import CartView from "./views/cart/CartView";
-import LoginView from "./views/login/LoginView";
+import { Route, Routes } from "react-router-dom";
+import CartView from "./pages/cart/CartView";
+import LoginView from "./pages/login/LoginView";
 import ProductView from "./components/ProductView";
-import RegisterView from "./views/login/RegisterView";
+import RegisterView from "./pages/login/RegisterView";
+import NavBar from "./components/NavBar";
 import createMockServer from "./data/mock";
 import "./App.css";
 
 createMockServer();
 
 function App() {
-  //  return <CartView />;
-  //  return <LoginView />;
-  //  return <ProductView />;
-  return <RegisterView />;
+  return (
+    <>
+      <NavBar
+        onSearch={(searchText) => {
+          /* setProductQuery({ ...productQuery, searchText }) */
+        }}
+      />
+      <Routes>
+        <Route path="/" element={<ProductView />} />
+        <Route path="/cart" element={<CartView />} />
+        <Route path="/login" element={<LoginView />} />
+        <Route path="/register" element={<RegisterView />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;

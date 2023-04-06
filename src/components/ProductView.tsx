@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import CategoryList from "./CategoryList";
-import NavBar from "./NavBar";
 import ProductGrid from "./ProductGrid";
 import { ProductQuery } from "../hooks/useProducts";
 
@@ -20,13 +19,7 @@ function ProductView() {
         lg: "200px 1fr",
       }}
     >
-      <GridItem area="nav">
-        <NavBar
-          onSearch={(searchText) =>
-            setProductQuery({ ...productQuery, searchText })
-          }
-        />
-      </GridItem>
+      <GridItem area="nav"></GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <CategoryList

@@ -45,6 +45,7 @@ function RegisterView() {
               <NameField />
               <EmailField />
               <PasswordField />
+              <PasswordField title="Password again" id="passwordAgain" />
             </Stack>
             <HStack justify="space-between">
               <Checkbox defaultChecked>Remember me</Checkbox>

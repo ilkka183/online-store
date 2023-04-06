@@ -4,7 +4,7 @@ function NameField() {
   return (
     <FormControl>
       <FormLabel htmlFor="name">Name</FormLabel>
-      <Input id="name" />
+      <Input id="name" required />
     </FormControl>
   );
 }

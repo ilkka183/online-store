@@ -9,7 +9,12 @@ import {
 import { useRef, useState } from "react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 
-function PasswordField() {
+interface Props {
+  title?: string;
+  id?: string;
+}
+
+function PasswordField({ title = "Password", id = "password" }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setOpen] = useState(false);
@@ -24,7 +29,7 @@ function PasswordField() {
 
   return (
     <FormControl>
-      <FormLabel htmlFor="password">Password</FormLabel>
+      <FormLabel htmlFor="password">{title}</FormLabel>
       <InputGroup>
         <InputRightElement>
           <IconButton
@@ -35,8 +40,8 @@ function PasswordField() {
           />
         </InputRightElement>
         <Input
-          id="password"
-          name="password"
+          id={id}
+          name={id}
           ref={inputRef}
           type={isOpen ? "text" : "password"}
           required
