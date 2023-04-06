@@ -30,9 +30,9 @@ function ProductView() {
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
           <CategoryList
-            selectedCategory={productQuery.category}
-            onSelectCategory={(category) =>
-              setProductQuery({ ...productQuery, category })
+            selectedCategoryId={productQuery.categoryId}
+            onSelectCategory={(categoryId) =>
+              setProductQuery({ ...productQuery, categoryId })
             }
           />
         </GridItem>

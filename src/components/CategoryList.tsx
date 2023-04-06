@@ -9,18 +9,18 @@ import {
 import useCategories from "../hooks/useCategories";
 
 interface Props {
-  selectedCategory: string;
-  onSelectCategory: (category: string) => void;
+  selectedCategoryId?: number;
+  onSelectCategory: (categoryId: number) => void;
 }
 
-function CategoryList({ selectedCategory, onSelectCategory }: Props) {
+function CategoryList({ selectedCategoryId, onSelectCategory }: Props) {
   const { data, error, isLoading } = useCategories();
 
   if (error) return null;
 
   if (isLoading) return <Spinner />;
 
-  const categories = ["", ...data];
+  const categories = [{ id: 0, name: "" }, ...data];
 
   return (
     <>
@@ -29,17 +29,19 @@ function CategoryList({ selectedCategory, onSelectCategory }: Props) {
       </Heading>
       <List>
         {categories.map((category) => (
-          <ListItem key={category} paddingY="5px">
+          <ListItem key={category.id} paddingY="5px">
             <HStack>
               <Button
                 fontSize="lg"
-                fontWeight={category === selectedCategory ? "bold" : "normal"}
+                fontWeight={
+                  category.id === selectedCategoryId ? "bold" : "normal"
+                }
                 textAlign="left"
                 variant="link"
                 whiteSpace="normal"
-                onClick={() => onSelectCategory(category)}
+                onClick={() => onSelectCategory(category.id)}
               >
-                {category ? category : "All products"}
+                {category.id ? category.name : "All products"}
               </Button>
             </HStack>
           </ListItem>

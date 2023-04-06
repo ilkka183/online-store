@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -6,18 +5,16 @@ import {
   HStack,
   Link,
   Stack,
-  useColorModeValue as mode,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import CartItem, { CartItemData } from "./CartItem";
+import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
-import { cartData as initialCartData } from "../../data/cartData";
+import useCarts from "../../hooks/useCarts";
 
 function CartView() {
-  const [cartData, setCartData] = useState<CartItemData[]>([]);
+  const { data, setData, error, isLoading } = useCarts();
 
-  useEffect(() => {
-    setCartData([...initialCartData]);
-  }, []);
+  const total = data.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <Box
@@ -34,18 +31,16 @@ function CartView() {
         <Stack spacing={{ base: "8", md: "10" }} flex="2">
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart{" "}
-            {cartData.length > 0
-              ? "(" + cartData.length + "items)"
-              : " is empty"}
+            {data.length > 0 ? "(" + data.length + "items)" : " is empty"}
           </Heading>
 
           <Stack spacing="6">
-            {cartData.map((item) => (
+            {data.map((item) => (
               <CartItem
                 key={item.id}
                 item={item}
                 onClickDelete={(id: string) =>
-                  setCartData(cartData.filter((data) => data.id !== id))
+                  setData(data.filter((data) => data.id !== id))
                 }
               />
             ))}
@@ -53,10 +48,12 @@ function CartView() {
         </Stack>
 
         <Flex direction="column" align="center" flex="1">
-          <OrderSummary />
+          <OrderSummary total={total} />
           <HStack mt="6" fontWeight="semibold">
             <p>or</p>
-            <Link color={mode("blue.500", "blue.200")}>Continue shopping</Link>
+            <Link color={useColorModeValue("blue.500", "blue.200")}>
+              Continue shopping
+            </Link>
           </HStack>
         </Flex>
       </Stack>

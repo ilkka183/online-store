@@ -1,24 +1,30 @@
 import useData from "./useData";
 
 export interface ProductQuery {
-  category: string;
+  categoryId?: number;
   searchText: string;
+}
+
+interface Rating {
+  rate: number;
+  count: number;
 }
 
 export interface Product {
   id: number;
   title: string;
-  description: string;
-  category: string;
-  image: string;
   price: number;
+  description: string;
+  categoryId: number;
+  image: string;
+  rating: Rating;
 }
 
 function useProducts(productQuery: ProductQuery) {
   let endpoint = "/products";
 
-  if (productQuery?.category)
-    endpoint += "/category/" + productQuery?.category;
+  if (productQuery?.categoryId)
+    endpoint += "/category/" + productQuery?.categoryId;
 
   return useData<Product>(endpoint, [productQuery]);
 }
