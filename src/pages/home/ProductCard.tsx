@@ -7,7 +7,7 @@ import {
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
-import { Product } from "../hooks/useProducts";
+import { Product } from "../../hooks/useProducts";
 
 interface Props {
   product: Product;

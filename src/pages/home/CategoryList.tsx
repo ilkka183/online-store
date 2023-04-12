@@ -6,7 +6,7 @@ import {
   ListItem,
   Spinner,
 } from "@chakra-ui/react";
-import useCategories from "../hooks/useCategories";
+import useCategories from "../../hooks/useCategories";
 
 interface Props {
   selectedCategoryId?: number;

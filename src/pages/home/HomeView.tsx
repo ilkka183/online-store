@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Grid, GridItem, Show } from "@chakra-ui/react";
 import CategoryList from "./CategoryList";
 import ProductGrid from "./ProductGrid";
-import { ProductQuery } from "../hooks/useProducts";
+import { ProductQuery } from "../../hooks/useProducts";
 
-function ProductView() {
+function HomeView() {
   const [productQuery, setProductQuery] = useState<ProductQuery>(
     {} as ProductQuery
   );
@@ -37,4 +37,4 @@ function ProductView() {
   );
 }
 
-export default ProductView;
+export default HomeView;

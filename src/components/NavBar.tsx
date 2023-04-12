@@ -1,4 +1,5 @@
-import { Button, HStack, Image } from "@chakra-ui/react";
+import { Button, HStack, Image, Link } from "@chakra-ui/react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.webp";
 import SearchInput from "./SearchInput";
 import ColorModeSwitch from "./ColorModeSwitch";
@@ -9,14 +10,24 @@ interface Props {
 }
 
 function NavBar({ onSearch }: Props) {
+  const navigate = useNavigate();
+
   return (
-    <HStack padding="10px">
-      <Image src={logo} boxSize="60px" />
-      <SearchInput onSearch={onSearch} />
-      <ColorModeSwitch />
-      <Button>Sign in</Button>
-      <CgShoppingCart />
-    </HStack>
+    <>
+      <HStack padding="10px">
+        <Image src={logo} boxSize="60px" onClick={() => navigate("/home")} />
+        <SearchInput onSearch={onSearch} />
+        <ColorModeSwitch />
+        <Link as={RouterLink} to="/signup">
+          Sign Up
+        </Link>
+        <Button onClick={() => navigate("/signin")}>Sign in</Button>
+        <CgShoppingCart />
+        <Link as={RouterLink} to="/cart">
+          Cart
+        </Link>
+      </HStack>
+    </>
   );
 }
 

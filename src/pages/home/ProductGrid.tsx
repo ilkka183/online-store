@@ -1,6 +1,6 @@
 import { GridItem, SimpleGrid, Spinner } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
-import useProducts, { Product, ProductQuery } from "../hooks/useProducts";
+import useProducts, { Product, ProductQuery } from "../../hooks/useProducts";
 
 interface Props {
   productQuery: ProductQuery;
