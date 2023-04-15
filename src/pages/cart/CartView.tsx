@@ -9,12 +9,20 @@ import {
 } from "@chakra-ui/react";
 import CartItem from "./CartItem";
 import OrderSummary from "./OrderSummary";
-import useCarts from "../../hooks/useCarts";
+import cartService from "../../services/cartService";
 
 function CartView() {
-  const { data, setData, error, isLoading } = useCarts();
+  const { data, setData, error, isLoading } = cartService.useAll();
 
   const total = data.reduce((sum, item) => sum + item.price, 0);
+
+  const deleteItem = (id: number) => {
+    const originalData = [...data];
+
+    setData(data.filter((data) => data.id !== id));
+
+    cartService.delete(id).catch((err) => setData(originalData));
+  };
 
   return (
     <Box
@@ -39,9 +47,7 @@ function CartView() {
               <CartItem
                 key={item.id}
                 item={item}
-                onClickDelete={(id: string) =>
-                  setData(data.filter((data) => data.id !== id))
-                }
+                onClickDelete={(id: number) => deleteItem(id)}
               />
             ))}
           </Stack>

@@ -1,20 +1,23 @@
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
-  Flex,
   Box,
+  Button,
+  Checkbox,
+  Divider,
+  Flex,
   FormControl,
   FormLabel,
-  Input,
-  Checkbox,
-  Stack,
-  Link,
-  Button,
   Heading,
+  HStack,
+  Link,
+  Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
 
-function SignInView() {
+export default function SignInView() {
   const navigate = useNavigate();
 
   return (
@@ -28,7 +31,7 @@ function SignInView() {
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool <Link color={"blue.400"}>features</Link> ✌️
+            to enjoy all of our cool features
           </Text>
         </Stack>
         <Box
@@ -40,13 +43,13 @@ function SignInView() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <EmailInput />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <PasswordInput />
             </FormControl>
-            <Stack spacing={10}>
+            <Stack spacing={5}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
                 align={"start"}
@@ -55,15 +58,22 @@ function SignInView() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
-              <Button colorScheme="blue">Sign in</Button>
-              <Stack pt={6}>
-                <Text align={"center"}>
-                  Already a user?{" "}
-                  <Link color={"blue.400"} as={RouterLink} to="/signup">
-                    Sign up
-                  </Link>
+              <Button size="lg" colorScheme="blue">
+                Sign in
+              </Button>
+              <HStack>
+                <Divider />
+                <Text fontSize="sm" whiteSpace="nowrap" color="muted">
+                  New customer?
                 </Text>
-              </Stack>
+                <Divider />
+              </HStack>
+              <Button
+                colorScheme="gray"
+                onClick={() => navigate("/createaccount")}
+              >
+                Create account
+              </Button>
             </Stack>
           </Stack>
         </Box>
@@ -71,5 +81,3 @@ function SignInView() {
     </Flex>
   );
 }
-
-export default SignInView;

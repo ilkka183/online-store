@@ -1,6 +1,22 @@
-import { Cart } from "../hooks/useCarts";
+import { Cart } from "../services/cartService";
 
-export const cartData: Cart[] = [
+class CartTable {
+  public get(): Cart[] {
+    console.log(this.data);
+
+    return this.data;
+  }
+
+  public delete(id: string): boolean {
+    let newData = this.data.filter(item => item.id !== id);
+    this.data = newData;
+
+    console.log(this.data);
+
+    return true;
+  }
+
+  private data: Cart[] = [
   {
     id: '1',
     price: 39.99,
@@ -32,3 +48,8 @@ export const cartData: Cart[] = [
       'https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
   },
 ];
+}
+
+const cart = new CartTable();
+
+export default cart;

@@ -1,4 +1,4 @@
-import { Category } from "../hooks/useCategories";
+import { Category } from "../services/categoriyService";
 
 export const categoryData: Category[] = [
   { id: 1, name: "electronics" },

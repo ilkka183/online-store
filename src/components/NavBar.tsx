@@ -9,7 +9,7 @@ interface Props {
   onSearch: (searchText: string) => void;
 }
 
-function NavBar({ onSearch }: Props) {
+export default function NavBar({ onSearch }: Props) {
   const navigate = useNavigate();
 
   return (
@@ -18,8 +18,8 @@ function NavBar({ onSearch }: Props) {
         <Image src={logo} boxSize="60px" onClick={() => navigate("/home")} />
         <SearchInput onSearch={onSearch} />
         <ColorModeSwitch />
-        <Link as={RouterLink} to="/signup">
-          Sign Up
+        <Link as={RouterLink} to="/createaccount">
+          Create account
         </Link>
         <Button onClick={() => navigate("/signin")}>Sign in</Button>
         <CgShoppingCart />
@@ -30,5 +30,3 @@ function NavBar({ onSearch }: Props) {
     </>
   );
 }
-
-export default NavBar;

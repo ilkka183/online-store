@@ -4,7 +4,7 @@ import ProductMeta from "./ProductMeta";
 import QuantitySelect from "./QuantitySelect";
 
 export interface CartItemData {
-  id: string;
+  id: number;
   price: number;
   currency: string;
   name: string;
@@ -18,7 +18,7 @@ interface Props {
   isGiftWrapping?: boolean;
   onChangeQuantity?: (quantity: number) => void;
   onClickGiftWrapping?: () => void;
-  onClickDelete: (id: string) => void;
+  onClickDelete: (id: number) => void;
 }
 
 function CartItem({

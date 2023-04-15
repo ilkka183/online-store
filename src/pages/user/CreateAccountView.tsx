@@ -1,26 +1,22 @@
-import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import {
-  Flex,
   Box,
+  Button,
+  Flex,
   FormControl,
   FormLabel,
-  Input,
-  InputGroup,
-  HStack,
-  InputRightElement,
-  Stack,
-  Button,
   Heading,
+  Input,
+  Link,
+  HStack,
+  Stack,
   Text,
   useColorModeValue,
-  Link,
 } from "@chakra-ui/react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import EmailInput from "./EmailInput";
+import PasswordInput from "./PasswordInput";
 
-function SignUpView() {
-  const [showPassword, setShowPassword] = useState(false);
-
+export default function CreateAccountView() {
   return (
     <Flex
       minH={"100vh"}
@@ -31,10 +27,10 @@ function SignUpView() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Sign up
+            Create an account
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to enjoy all of our cool features ✌️
+            to enjoy all of our cool features
           </Text>
         </Stack>
         <Box
@@ -60,35 +56,19 @@ function SignUpView() {
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <EmailInput />
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl id="password1" isRequired>
               <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
+              <PasswordInput />
+            </FormControl>
+            <FormControl id="password2" isRequired>
+              <FormLabel>Password again</FormLabel>
+              <PasswordInput />
             </FormControl>
             <Stack spacing={10} pt={2}>
-              <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-              >
-                Sign up
+              <Button loadingText="Submitting" size="lg" colorScheme="blue">
+                Create account
               </Button>
             </Stack>
             <Stack pt={6}>
@@ -105,5 +85,3 @@ function SignUpView() {
     </Flex>
   );
 }
-
-export default SignUpView;
