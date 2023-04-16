@@ -11,6 +11,7 @@ interface Rating {
 }
 
 export interface Product extends Entity {
+  id: string;
   title: string;
   price: number;
   description: string;
@@ -20,6 +21,8 @@ export interface Product extends Entity {
 }
 
 class ProductService extends EntityService<Product> {
+  protected name(): string { return "products"; }
+
   public useProducts(productQuery: ProductQuery) {
     let endpoint = "/products";
   
@@ -30,4 +33,4 @@ class ProductService extends EntityService<Product> {
   }
 }
 
-export default new ProductService("/products");
+export default new ProductService();

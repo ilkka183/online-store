@@ -1,33 +1,22 @@
 import { createServer } from "miragejs";
-import cart from "./cartData";
-import { categoryData } from "./categoryData";
-import { productData } from "./productData";
-import { userData } from "./userData";
+import carts from "./cartTable";
+import categories from "./categoryTable";
+import products from "./productTable";
+import users from "./userTable";
 
 export default function createMockServer() {
  const server = createServer({
   routes() {
-    this.get("/api/carts", () => cart.get());
-    
-    this.delete("/api/carts/:id", (schema, request) => {
-      const id = request.params.id;
+    this.get("/api/carts", () => carts.getAll());
+    this.delete("/api/carts/:id", (schema, request) => carts.delete(request.params.id));
 
-      return cart.delete(id);
-    });
+    this.get("/api/categories", () => categories.getAll());
 
-    this.get("/api/categories", () => categoryData);
-    this.get("/api/products", () => productData);
-    this.get("/api/products/category/:id", (schema, request) => productData.filter(product => product.categoryId.toString() === request.params.id));
-    this.get("/api/users", () => userData);
+    this.get("/api/products", () => products.getAll());
+    this.get("/api/products/category/:id", (schema, request) => products.getByCategory(parseInt(request.params.id)));
 
-    this.get("/api/users/:id", (schema, request) => {
-      const index = userData.findIndex(user => user.id.toString() === request.params.id);
-
-      if (index >= 0)
-        return userData[index];
-
-      return null;
-    });
+    this.get("/api/users", () => users.getAll());
+    this.get("/api/users/:id", (schema, request) => users.get(request.params.id));
   },
 });
 

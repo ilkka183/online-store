@@ -12,17 +12,9 @@ import OrderSummary from "./OrderSummary";
 import cartService from "../../services/cartService";
 
 function CartView() {
-  const { data, setData, error, isLoading } = cartService.useAll();
+  const { data, onDelete, error, isLoading } = cartService.useAll();
 
   const total = data.reduce((sum, item) => sum + item.price, 0);
-
-  const deleteItem = (id: number) => {
-    const originalData = [...data];
-
-    setData(data.filter((data) => data.id !== id));
-
-    cartService.delete(id).catch((err) => setData(originalData));
-  };
 
   return (
     <Box
@@ -47,7 +39,7 @@ function CartView() {
               <CartItem
                 key={item.id}
                 item={item}
-                onClickDelete={(id: number) => deleteItem(id)}
+                onClickDelete={(id: number) => onDelete(id)}
               />
             ))}
           </Stack>

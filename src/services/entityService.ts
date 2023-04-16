@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "./apiClient";
 
 export interface Entity {
-  id: number;
+  id: number | string;
 }
 
-export default class EntityService<T extends Entity> {
-  private endpoint;
-
-  constructor(endpoint: string) {
-    this.endpoint = endpoint;
-  }
+export default abstract class EntityService<T extends Entity> {
+  protected abstract name(): string;
+  protected endpoint(): string { return "/" + this.name(); }
 
   public useAll(deps?: any[]) {
     const [data, setData] = useState<T[]>([]);
@@ -23,7 +20,7 @@ export default class EntityService<T extends Entity> {
       setLoading(true);
   
       apiClient
-        .get<T[]>(this.endpoint, {
+        .get<T[]>(this.endpoint(), {
           signal: controller.signal,
         })
         .then((res) => {
@@ -39,19 +36,29 @@ export default class EntityService<T extends Entity> {
   
       return () => controller.abort();
     }, deps ? [...deps] :  []);
+
+    const onDelete = (id: number | string) => {
+      const originalData = [...data];
+
+      setData(data.filter((data) => data.id !== id));
   
-    return { data, setData, error, isLoading }
-  }
+      apiClient.delete(this.endpoint() + "/" + id).catch((err) => setData(originalData));
+    }
+  
+    const onCreate = (entity: T) => {
+      const originalData = [...data];
 
-  public delete(id: number) {
-    return apiClient.delete(this.endpoint + "/" + id);
-  }
+      setData([entity, ...data]);
 
-  public create(entity: T) {
-    return apiClient.post(this.endpoint, entity);
-  }
+      apiClient.post(this.endpoint(), entity).catch((err) => setData(originalData));
+    }
+  
+    const onUpdate = (entity: T) => {
+      const originalData = [...data];
 
-  public update(entity: T) {
-    return apiClient.patch(this.endpoint + "/" + entity.id, entity);
+      apiClient.patch(this.endpoint() + "/" + entity.id, entity).catch((err) => setData(originalData));
+    }
+  
+    return { data, onDelete, onCreate, onUpdate, error, isLoading }
   }
 }
