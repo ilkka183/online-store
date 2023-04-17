@@ -9,7 +9,7 @@ export default class MockTable<T extends Entity> {
     this.defaultData = defaultData;
   }
 
-  public getData(): T[] {
+  private getData(): T[] {
     const localValue = localStorage.getItem(this.name);
 
     let data = [];
@@ -30,7 +30,7 @@ export default class MockTable<T extends Entity> {
     return this.getData();
   }
 
-  public get(id: string | number): T | null {
+  public getById(id: string | number): T | null {
     const data = this.getData();
 
     const index = data.findIndex(item => item.id == id);

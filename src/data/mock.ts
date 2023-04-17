@@ -4,33 +4,30 @@ import categoryService from "../services/categoryService";
 import productService from "../services/productService";
 import userService from "../services/userService";
 
+const carts = cartService.createMockTable();
 const categories = categoryService.createMockTable();
 const products = productService.createMockTable();
-const carts = cartService.createMockTable();
 const users = userService.createMockTable();
 
 export default function createMockServer() {
  const server = createServer({
   routes() {
+    this.namespace = "api";
+
     // Carts
-    this.get("/api/carts", () => carts.getAll());
-    this.delete("/api/carts/:id", (schema, request) => carts.delete(request.params.id));
+    this.get("/carts", () => carts.getAll());
+    this.delete("/carts/:id", (schema, request) => carts.delete(request.params.id));
 
     // Categories
-    this.get("/api/categories", () => categories.getAll());
+    this.get("/categories", () => categories.getAll());
 
     // Products
-    this.get("/api/products", () => products.getAll());
-
-    this.get("/api/products/category/:id", (schema, request) => {
-      const data = products.getData();
-
-      return data.filter(item => item.categoryId.toString() === request.params.id);
-    });
+    this.get("/products", () => products.getAll());
+    this.get("/products/category/:id", (schema, request) => products.getAll().filter(item => item.categoryId.toString() === request.params.id));
 
     // Users
-    this.get("/api/users", () => users.getAll());
-    this.get("/api/users/:id", (schema, request) => users.get(request.params.id));
+    this.get("/users", () => users.getAll());
+    this.get("/users/:id", (schema, request) => users.getById(request.params.id));
   },
 });
 
