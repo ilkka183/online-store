@@ -1,4 +1,5 @@
 import EntityService, { Entity } from "./entityService";
+import data from "../data/categoryData";
 
 export interface Category extends Entity {
   id: number;
@@ -6,7 +7,6 @@ export interface Category extends Entity {
 }
 
 class CategoryService extends EntityService<Category> {
-  protected name(): string { return "categories"; }
 }
 
-export default new CategoryService();
+export default new CategoryService("categories", data);

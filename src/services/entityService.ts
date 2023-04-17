@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "./apiClient";
+import Table from "../data/table";
 
 export interface Entity {
   id: number | string;
 }
 
-export default abstract class EntityService<T extends Entity> {
-  protected abstract name(): string;
-  protected endpoint(): string { return "/" + this.name(); }
+export default class EntityService<T extends Entity> {
+  private name: string;
+  private mockData: T[];
 
-  public useAll(deps?: any[]) {
+  constructor(name: string, mockData: T[]) {
+    this.name = name;
+    this.mockData = mockData;
+  }
+
+  protected endpoint(): string { return "/" + this.name; }
+
+  public createMockTable() {
+    return new Table<T>(this.name, this.mockData);
+  }
+
+  protected useOf(endpoint: string, deps?: any[]) {
     const [data, setData] = useState<T[]>([]);
     const [error, setError] = useState("");
     const [isLoading, setLoading] = useState(false);
@@ -20,7 +32,7 @@ export default abstract class EntityService<T extends Entity> {
       setLoading(true);
   
       apiClient
-        .get<T[]>(this.endpoint(), {
+        .get<T[]>(endpoint, {
           signal: controller.signal,
         })
         .then((res) => {
@@ -60,5 +72,9 @@ export default abstract class EntityService<T extends Entity> {
     }
   
     return { data, onDelete, onCreate, onUpdate, error, isLoading }
+  }
+
+  public use(deps?: any[]) {
+    return this.useOf(this.endpoint(), deps);
   }
 }

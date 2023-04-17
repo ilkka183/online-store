@@ -14,11 +14,11 @@ function ProductGrid({ productQuery }: Props) {
 
   if (error) return null;
 
-  let products = [];
+  let products: Product[] = [];
 
   if (isLoading) {
     for (let id: number = 1; id <= 4; id++)
-      products.push({ ...({} as Product), id });
+      products.push({ ...({} as Product), id: id.toString() });
   } else products = [...data];
 
   return (

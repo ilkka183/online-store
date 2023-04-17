@@ -1,4 +1,5 @@
 import EntityService, { Entity } from "./entityService";
+import data from "../data/userData";
 
 export interface User extends Entity {
   id: number;
@@ -7,7 +8,6 @@ export interface User extends Entity {
 }
 
 class UserService extends EntityService<User> {
-  protected name(): string { return "users"; }
 }
 
-export default new UserService();
+export default new UserService("users", data);

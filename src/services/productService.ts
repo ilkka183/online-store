@@ -1,4 +1,5 @@
 import EntityService, { Entity } from "./entityService";
+import data from "../data/productData";
 
 export interface ProductQuery {
   categoryId?: number;
@@ -21,16 +22,14 @@ export interface Product extends Entity {
 }
 
 class ProductService extends EntityService<Product> {
-  protected name(): string { return "products"; }
-
   public useProducts(productQuery: ProductQuery) {
-    let endpoint = "/products";
+    let endpoint = this.endpoint();
   
     if (productQuery?.categoryId)
       endpoint += "/category/" + productQuery?.categoryId;
   
-    return this.useAll([productQuery]);
+    return this.useOf(endpoint, [productQuery]);
   }
 }
 
-export default new ProductService();
+export default new ProductService("products", data);

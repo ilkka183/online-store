@@ -1,8 +1,13 @@
 import { createServer } from "miragejs";
-import carts from "./cartTable";
-import categories from "./categoryTable";
-import products from "./productTable";
-import users from "./userTable";
+import cartService from "../services/cartService";
+import categoryService from "../services/categoryService";
+import productService from "../services/productService";
+import userService from "../services/userService";
+
+const categories = categoryService.createMockTable();
+const products = productService.createMockTable();
+const carts = cartService.createMockTable();
+const users = userService.createMockTable();
 
 export default function createMockServer() {
  const server = createServer({
@@ -13,7 +18,12 @@ export default function createMockServer() {
     this.get("/api/categories", () => categories.getAll());
 
     this.get("/api/products", () => products.getAll());
-    this.get("/api/products/category/:id", (schema, request) => products.getByCategory(parseInt(request.params.id)));
+
+    this.get("/api/products/category/:id", (schema, request) => {
+      const data = products.getData();
+
+      return data.filter(item => item.categoryId.toString() === request.params.id);
+    });
 
     this.get("/api/users", () => users.getAll());
     this.get("/api/users/:id", (schema, request) => users.get(request.params.id));

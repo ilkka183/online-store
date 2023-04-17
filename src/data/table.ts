@@ -1,24 +1,29 @@
 import { Entity } from "../services/entityService";
 
-export default abstract class Table<T extends Entity> {
-  protected abstract name(): string;
-  protected abstract defaultData(): T[];
+export default class Table<T extends Entity> {
+  private name: string;
+  private defaultData: T[];
 
-  protected getData(): T[] {
-    const localValue = localStorage.getItem(this.name());
+  constructor(name: string, defaultData: T[]) {
+    this.name = name.toUpperCase();
+    this.defaultData = defaultData;
+  }
+
+  public getData(): T[] {
+    const localValue = localStorage.getItem(this.name);
 
     let data = [];
 
     if (localValue != null)
       data = JSON.parse(localValue);
     else
-      data = this.defaultData()
+      data = this.defaultData
 
     return data;
   }
 
-  protected setData(data: T[]) {
-    localStorage.setItem(this.name(), JSON.stringify(data));
+  private setData(data: T[]) {
+    localStorage.setItem(this.name, JSON.stringify(data));
   }
 
   public getAll(): T[] {

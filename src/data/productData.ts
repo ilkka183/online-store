@@ -1,18 +1,6 @@
-import Table from "./table";
 import { Product } from "../services/productService";
 
-class ProductTable extends Table<Product> {
-  protected name = (): string => "PRODUCTS";
-
-  public getByCategory(categoryId: number): Product[] {
-    const data = this.getData();
-
-    const filteredData = data.filter(item => item.categoryId === categoryId);
-
-    return filteredData;
-  }
-
-  protected defaultData = (): Product[] => [
+const data: Product[] = [
   {
     id: '1',
     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
@@ -254,6 +242,5 @@ class ProductTable extends Table<Product> {
     }
   }
 ];
-}
 
-export default new ProductTable;
+export default data;

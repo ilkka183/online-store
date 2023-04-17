@@ -6,7 +6,7 @@ import {
   ListItem,
   Spinner,
 } from "@chakra-ui/react";
-import categoryService from "../../services/categoriyService";
+import categoryService from "../../services/categoryService";
 
 interface Props {
   selectedCategoryId?: number;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 function CategoryList({ selectedCategoryId, onSelectCategory }: Props) {
-  const { data, error, isLoading } = categoryService.useAll();
+  const { data, error, isLoading } = categoryService.use();
 
   if (error) return null;
 

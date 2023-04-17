@@ -12,7 +12,7 @@ import OrderSummary from "./OrderSummary";
 import cartService from "../../services/cartService";
 
 function CartView() {
-  const { data, onDelete, error, isLoading } = cartService.useAll();
+  const { data, onDelete, error, isLoading } = cartService.use();
 
   const total = data.reduce((sum, item) => sum + item.price, 0);
 
