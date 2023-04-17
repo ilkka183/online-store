@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import apiClient, { CanceledError } from "./apiClient";
-import Table from "../data/table";
+import MockTable from "../data/mockTable";
 
 export interface Entity {
   id: number | string;
@@ -18,7 +18,7 @@ export default class EntityService<T extends Entity> {
   protected endpoint(): string { return "/" + this.name; }
 
   public createMockTable() {
-    return new Table<T>(this.name, this.mockData);
+    return new MockTable<T>(this.name, this.mockData);
   }
 
   protected useOf(endpoint: string, deps?: any[]) {

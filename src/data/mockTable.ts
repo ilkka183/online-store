@@ -1,6 +1,6 @@
 import { Entity } from "../services/entityService";
 
-export default class Table<T extends Entity> {
+export default class MockTable<T extends Entity> {
   private name: string;
   private defaultData: T[];
 
