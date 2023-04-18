@@ -1,17 +1,22 @@
 import { Select, SelectProps, useColorModeValue } from "@chakra-ui/react";
 
 function QuantitySelect(props: SelectProps) {
+  const options: number[] = [];
+
+  for (let i = 1; i <= 10; i++) options.push(i);
+
   return (
     <Select
-      maxW="64px"
+      maxW="80px"
       aria-label="Select quantity"
       focusBorderColor={useColorModeValue("blue.500", "blue.200")}
       {...props}
     >
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
     </Select>
   );
 }

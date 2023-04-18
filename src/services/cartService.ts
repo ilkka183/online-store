@@ -1,17 +1,17 @@
 import EntityService, { Entity } from "./entityService";
 import data from "../data/cartData";
 
-export interface Cart extends Entity {
+export interface CartItem extends Entity {
   id: number;
   price: number;
   currency: string;
   name: string;
   description: string;
   quantity: number;
-  imageUrl: string;
+  image: string;
 }
 
-class CartService extends EntityService<Cart> {
+class CartService extends EntityService<CartItem> {
 }
 
 export default new CartService("carts", data);

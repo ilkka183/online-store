@@ -16,6 +16,7 @@ export default class EntityService<T extends Entity> {
   }
 
   protected endpoint(): string { return "/" + this.name; }
+  protected endpointOf(id: string | number): string { return this.endpoint() + "/" + id; }
 
   public createMockTable() {
     return new MockTable<T>(this.name, this.mockData);
@@ -49,29 +50,43 @@ export default class EntityService<T extends Entity> {
       return () => controller.abort();
     }, deps ? [...deps] :  []);
 
-    const onDelete = (id: number | string) => {
-      const originalData = [...data];
-
-      setData(data.filter((data) => data.id !== id));
-  
-      apiClient.delete(this.endpoint() + "/" + id).catch((err) => setData(originalData));
-    }
-  
     const onCreate = (entity: T) => {
       const originalData = [...data];
 
-      setData([entity, ...data]);
+      const newData = [entity, ...data]; 
+      setData(newData);
 
       apiClient.post(this.endpoint(), entity).catch((err) => setData(originalData));
     }
   
-    const onUpdate = (entity: T) => {
+    const onReplace = (entity: T) => {
       const originalData = [...data];
 
-      apiClient.patch(this.endpoint() + "/" + entity.id, entity).catch((err) => setData(originalData));
+      const newData = data.map(item => item.id === entity.id ? entity : item);
+      setData(newData);
+
+      apiClient.put(this.endpointOf(entity.id), entity).catch((err) => setData(originalData));
     }
   
-    return { data, onDelete, onCreate, onUpdate, error, isLoading }
+    const onUpdate = (id: string | number, entity: Partial<T>) => {
+      const originalData = [...data];
+
+      const newData = data.map(item => item.id === id ? {...item, ...entity} : item); 
+      setData(newData);
+
+      apiClient.patch(this.endpointOf(id), entity).catch((err) => setData(originalData));
+    }
+
+    const onDelete = (id: string | number) => {
+      const originalData = [...data];
+
+      const newData = data.filter((item) => item.id !== id);
+      setData(newData);
+  
+      apiClient.delete(this.endpointOf(id)).catch((err) => setData(originalData));
+    }
+ 
+    return { data, onCreate, onReplace, onUpdate, onDelete, error, isLoading }
   }
 
   public use(deps?: any[]) {

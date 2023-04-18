@@ -41,15 +41,6 @@ export default class MockTable<T extends Entity> {
     return null;
   }
 
-  public delete(id: string | number): boolean {
-    const data = this.getData();
-
-    const newData = data.filter(item => item.id != id);
-    this.setData(newData);
-
-    return true;
-  }
-
   public post(entity: T): boolean {
     const data = this.getData();
 
@@ -63,6 +54,24 @@ export default class MockTable<T extends Entity> {
     const data = this.getData();
 
     const newData = data.map(item => item.id == entity.id ? entity : item);
+    this.setData(newData);
+
+    return true;
+  }
+
+  public patch(id: string | number, entity: Partial<T>): boolean {
+    const data = this.getData();
+
+    const newData = data.map(item => item.id == id ? {...item, ...entity} : item);
+    this.setData(newData);
+
+    return true;
+  }
+
+  public delete(id: string | number): boolean {
+    const data = this.getData();
+
+    const newData = data.filter(item => item.id != id);
     this.setData(newData);
 
     return true;

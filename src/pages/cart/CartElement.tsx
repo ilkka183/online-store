@@ -2,30 +2,21 @@ import { CloseButton, Flex, Link } from "@chakra-ui/react";
 import PriceTag from "./PriceTag";
 import ProductMeta from "./ProductMeta";
 import QuantitySelect from "./QuantitySelect";
-
-export interface CartItemData {
-  id: number;
-  price: number;
-  currency: string;
-  name: string;
-  description: string;
-  quantity: number;
-  imageUrl: string;
-}
+import { CartItem } from "../../services/cartService";
 
 interface Props {
-  item: CartItemData;
+  item: CartItem;
   isGiftWrapping?: boolean;
-  onChangeQuantity?: (quantity: number) => void;
+  onChangeQuantity: (quantity: number) => void;
+  onRemove: (id: number) => void;
   onClickGiftWrapping?: () => void;
-  onClickDelete: (id: number) => void;
 }
 
-function CartItem({
+export default function CartElement({
   item,
   isGiftWrapping,
   onChangeQuantity,
-  onClickDelete,
+  onRemove,
 }: Props) {
   return (
     <Flex
@@ -36,7 +27,7 @@ function CartItem({
       <ProductMeta
         name={item.name}
         description={item.description}
-        image={item.imageUrl}
+        image={item.image}
         isGiftWrapping={isGiftWrapping}
       />
 
@@ -46,16 +37,17 @@ function CartItem({
         justify="space-between"
         display={{ base: "none", md: "flex" }}
       >
+        <div>{item.quantity}</div>
         <QuantitySelect
           value={item.quantity}
           onChange={(e) => {
-            onChangeQuantity?.(+e.currentTarget.value);
+            onChangeQuantity(parseInt(e.currentTarget.value));
           }}
         />
         <PriceTag price={item.price} currency={item.currency} />
         <CloseButton
           aria-label={`Delete ${item.name} from cart`}
-          onClick={() => onClickDelete(item.id)}
+          onClick={() => onRemove(item.id)}
         />
       </Flex>
 
@@ -73,7 +65,7 @@ function CartItem({
         <QuantitySelect
           value={item.quantity}
           onChange={(e) => {
-            onChangeQuantity?.(+e.currentTarget.value);
+            onChangeQuantity(parseInt(e.currentTarget.value));
           }}
         />
         <PriceTag price={item.price} currency={item.currency} />
@@ -81,5 +73,3 @@ function CartItem({
     </Flex>
   );
 }
-
-export default CartItem;

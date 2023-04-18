@@ -16,6 +16,9 @@ export default function createMockServer() {
 
     // Carts
     this.get("/carts", () => carts.getAll());
+    this.post("/carts", (schema, request) => carts.post(JSON.parse(request.requestBody)));
+    this.put("/carts/:id", (schema, request) => carts.put(JSON.parse(request.requestBody)));
+    this.patch("/carts/:id", (schema, request) => carts.patch(request.params.id, JSON.parse(request.requestBody)));
     this.delete("/carts/:id", (schema, request) => carts.delete(request.params.id));
 
     // Categories

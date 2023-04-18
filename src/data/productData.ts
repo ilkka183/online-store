@@ -240,7 +240,43 @@ const data: Product[] = [
       rate: 3.6,
       count: 145
     }
-  }
+  },
+  {
+    id: '21',
+    title: 'Ferragamo bag',
+    price: 39.99,
+    description: 'Tan, 40mm',
+    categoryId: 5,
+    image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80',
+    rating: {
+      rate: 3.6,
+      count: 145
+    }
+  },
+  {
+    id: '22',
+    title: 'Bamboo Tan',
+    price: 39.99,
+    description: 'Tan, 40mm',
+    categoryId: 5,
+    image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80',
+    rating: {
+      rate: 3.6,
+      count: 145
+    },
+  },
+  {
+    id: '23',
+    title: 'Yeezy Sneakers',
+    price: 39.99,
+    description: 'Tan, 40mm',
+    categoryId: 6,
+    image: 'https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
+    rating: {
+      rate: 3.6,
+      count: 145
+    },
+  },
 ];
 
 export default data;

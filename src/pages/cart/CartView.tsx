@@ -7,12 +7,12 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
-import CartItem from "./CartItem";
+import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
 import cartService from "../../services/cartService";
 
-function CartView() {
-  const { data, onDelete, error, isLoading } = cartService.use();
+export default function CartView() {
+  const { data, onUpdate, onDelete, error, isLoading } = cartService.use();
 
   const total = data.reduce((sum, item) => sum + item.price, 0);
 
@@ -36,10 +36,13 @@ function CartView() {
 
           <Stack spacing="6">
             {data.map((item) => (
-              <CartItem
+              <CartElement
                 key={item.id}
                 item={item}
-                onClickDelete={(id: number) => onDelete(id)}
+                onChangeQuantity={(quantity: number) =>
+                  onUpdate(item.id, { quantity })
+                }
+                onRemove={(id: number) => onDelete(id)}
               />
             ))}
           </Stack>
@@ -58,5 +61,3 @@ function CartView() {
     </Box>
   );
 }
-
-export default CartView;
