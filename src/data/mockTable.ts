@@ -1,4 +1,4 @@
-import { Entity } from "../services/entityService";
+import { Entity, EntityId } from "../services/apiClient";
 
 export default class MockTable<T extends Entity> {
   private name: string;
@@ -30,7 +30,7 @@ export default class MockTable<T extends Entity> {
     return this.getData();
   }
 
-  public getById(id: string | number): T | null {
+  public getById(id: EntityId): T | null {
     const data = this.getData();
 
     const index = data.findIndex(item => item.id == id);
@@ -59,16 +59,16 @@ export default class MockTable<T extends Entity> {
     return true;
   }
 
-  public patch(id: string | number, entity: Partial<T>): boolean {
+  public patch(id: EntityId, entityFields: Partial<T>): boolean {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == id ? {...item, ...entity} : item);
+    const newData = data.map(item => item.id == id ? {...item, ...entityFields} : item);
     this.setData(newData);
 
     return true;
   }
 
-  public delete(id: string | number): boolean {
+  public delete(id: EntityId): boolean {
     const data = this.getData();
 
     const newData = data.filter(item => item.id != id);

@@ -5,7 +5,7 @@ interface Props {
   children?: ReactNode;
 }
 
-function SalePrice({ children }: Props) {
+export default function SalePrice({ children }: Props) {
   return (
     <Text
       as="span"
@@ -16,5 +16,3 @@ function SalePrice({ children }: Props) {
     </Text>
   );
 }
-
-export default SalePrice;

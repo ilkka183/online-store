@@ -1,6 +1,6 @@
 import { Select, SelectProps, useColorModeValue } from "@chakra-ui/react";
 
-function QuantitySelect(props: SelectProps) {
+export default function QuantitySelect(props: SelectProps) {
   const options: number[] = [];
 
   for (let i = 1; i <= 10; i++) options.push(i);
@@ -20,5 +20,3 @@ function QuantitySelect(props: SelectProps) {
     </Select>
   );
 }
-
-export default QuantitySelect;

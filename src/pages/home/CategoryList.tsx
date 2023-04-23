@@ -6,21 +6,24 @@ import {
   ListItem,
   Spinner,
 } from "@chakra-ui/react";
-import categoryService from "../../services/categoryService";
+import useCategories from "../../hooks/useCategories";
 
 interface Props {
   selectedCategoryId?: number;
-  onSelectCategory: (categoryId: number) => void;
+  onSelectCategory: (categoryId?: number) => void;
 }
 
-function CategoryList({ selectedCategoryId, onSelectCategory }: Props) {
-  const { data, error, isLoading } = categoryService.use();
+export default function CategoryList({
+  selectedCategoryId,
+  onSelectCategory,
+}: Props) {
+  const { data, error, isLoading } = useCategories();
 
-  if (error) return null;
+  if (error) return <p>{error.message}</p>;
 
   if (isLoading) return <Spinner />;
 
-  const categories = [{ id: 0, name: "" }, ...data];
+  const categories = [{ id: undefined, name: "" }, ...data];
 
   return (
     <>
@@ -29,7 +32,7 @@ function CategoryList({ selectedCategoryId, onSelectCategory }: Props) {
       </Heading>
       <List>
         {categories.map((category) => (
-          <ListItem key={category.id} paddingY="5px">
+          <ListItem key={category.id ? category.id : 0} paddingY="5px">
             <HStack>
               <Button
                 fontSize="lg"
@@ -50,5 +53,3 @@ function CategoryList({ selectedCategoryId, onSelectCategory }: Props) {
     </>
   );
 }
-
-export default CategoryList;

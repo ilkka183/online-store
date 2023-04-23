@@ -7,7 +7,7 @@ interface Props {
   total: number;
 }
 
-function OrderSummary({ total }: Props) {
+export default function OrderSummary({ total }: Props) {
   return (
     <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
       <Heading size="md">Order Summary</Heading>
@@ -44,5 +44,3 @@ function OrderSummary({ total }: Props) {
     </Stack>
   );
 }
-
-export default OrderSummary;

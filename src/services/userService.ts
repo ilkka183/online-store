@@ -1,4 +1,4 @@
-import EntityService, { Entity } from "./entityService";
+import APIClient, { Entity } from "./apiClient";
 import data from "../data/userData";
 
 export interface User extends Entity {
@@ -7,7 +7,4 @@ export interface User extends Entity {
   lastName: string;
 }
 
-class UserService extends EntityService<User> {
-}
-
-export default new UserService("users", data);
+export default new APIClient<User>("/users", data);

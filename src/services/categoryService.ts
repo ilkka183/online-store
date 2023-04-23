@@ -1,4 +1,4 @@
-import EntityService, { Entity } from "./entityService";
+import APIClient, { Entity } from "./apiClient";
 import data from "../data/categoryData";
 
 export interface Category extends Entity {
@@ -6,7 +6,4 @@ export interface Category extends Entity {
   name: string;
 }
 
-class CategoryService extends EntityService<Category> {
-}
-
-export default new CategoryService("categories", data);
+export default new APIClient<Category>("/categories", data);

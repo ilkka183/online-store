@@ -4,7 +4,7 @@ import CategoryList from "./CategoryList";
 import ProductGrid from "./ProductGrid";
 import { ProductQuery } from "../../services/productService";
 
-function HomeView() {
+export default function HomeView() {
   const [productQuery, setProductQuery] = useState<ProductQuery>(
     {} as ProductQuery
   );
@@ -36,5 +36,3 @@ function HomeView() {
     </Grid>
   );
 }
-
-export default HomeView;

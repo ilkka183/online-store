@@ -6,7 +6,7 @@ interface Props {
   isOnSale?: boolean;
 }
 
-function Price({ isOnSale, children }: Props) {
+export default function Price({ isOnSale, children }: Props) {
   const defaultColor = useColorModeValue("gray.700", "gray.400");
   const onSaleColor = useColorModeValue("gray.400", "gray.700");
   const color = isOnSale ? onSaleColor : defaultColor;
@@ -22,5 +22,3 @@ function Price({ isOnSale, children }: Props) {
     </Text>
   );
 }
-
-export default Price;

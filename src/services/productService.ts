@@ -1,4 +1,4 @@
-import EntityService, { Entity } from "./entityService";
+import APIClient, { Entity } from "./apiClient";
 import data from "../data/productData";
 
 export interface ProductQuery {
@@ -6,7 +6,7 @@ export interface ProductQuery {
   searchText: string;
 }
 
-interface Rating {
+export interface Rating {
   rate: number;
   count: number;
 }
@@ -21,15 +21,17 @@ export interface Product extends Entity {
   rating: Rating;
 }
 
-class ProductService extends EntityService<Product> {
-  public useProducts(productQuery: ProductQuery) {
-    let endpoint = this.endpoint();
-  
-    if (productQuery?.categoryId)
-      endpoint += "/category/" + productQuery?.categoryId;
-  
-    return this.useOf(endpoint, [productQuery]);
+class ProductClient extends APIClient<Product> {
+
+  getProducts = (query: ProductQuery) => {
+    let endpoint = this.endpoint;
+
+    if (query.categoryId)
+      endpoint += "/category/" + query.categoryId;
+
+    return this.getAt(endpoint);
   }
+  
 }
 
-export default new ProductService("products", data);
+export default new ProductClient("/products", data);

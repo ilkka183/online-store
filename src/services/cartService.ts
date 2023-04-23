@@ -1,4 +1,4 @@
-import EntityService, { Entity } from "./entityService";
+import APIClient, { Entity } from "./apiClient";
 import data from "../data/cartData";
 
 export interface CartItem extends Entity {
@@ -11,7 +11,4 @@ export interface CartItem extends Entity {
   image: string;
 }
 
-class CartService extends EntityService<CartItem> {
-}
-
-export default new CartService("carts", data);
+export default new APIClient<CartItem>("/carts", data);

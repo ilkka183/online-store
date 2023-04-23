@@ -9,7 +9,7 @@ interface Props {
   salePrice?: number;
 }
 
-function PriceTag({ price, currency, salePrice }: Props) {
+export default function PriceTag({ price, currency, salePrice }: Props) {
   return (
     <HStack spacing="1">
       <Price isOnSale={!!salePrice}>{formatPrice(price, { currency })}</Price>
@@ -19,5 +19,3 @@ function PriceTag({ price, currency, salePrice }: Props) {
     </HStack>
   );
 }
-
-export default PriceTag;

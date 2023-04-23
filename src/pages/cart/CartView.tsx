@@ -9,12 +9,17 @@ import {
 } from "@chakra-ui/react";
 import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
-import cartService from "../../services/cartService";
+import useCarts from "../../hooks/useCarts";
+import useCartDelete from "../../hooks/useCartDelete";
+import useCartUpdate from "../../hooks/useCartUpdate";
 
 export default function CartView() {
-  const { data, onUpdate, onDelete, error, isLoading } = cartService.use();
+  const { data: carts } = useCarts();
+  const { mutate: deleteCart } = useCartDelete();
+  const { mutate: updateCart } = useCartUpdate();
 
-  const total = data.reduce((sum, item) => sum + item.price, 0);
+  const total =
+    carts?.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
 
   return (
     <Box
@@ -31,18 +36,20 @@ export default function CartView() {
         <Stack spacing={{ base: "8", md: "10" }} flex="2">
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart{" "}
-            {data.length > 0 ? "(" + data.length + "items)" : " is empty"}
+            {carts && carts.length > 0
+              ? "(" + carts.length + "items)"
+              : " is empty"}
           </Heading>
 
           <Stack spacing="6">
-            {data.map((item) => (
+            {carts?.map((item) => (
               <CartElement
                 key={item.id}
                 item={item}
                 onChangeQuantity={(quantity: number) =>
-                  onUpdate(item.id, { quantity })
+                  updateCart({ id: item.id, payload: { quantity } })
                 }
-                onRemove={(id: number) => onDelete(id)}
+                onRemove={(id: number) => deleteCart(id)}
               />
             ))}
           </Stack>

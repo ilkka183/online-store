@@ -7,7 +7,7 @@ interface Props {
   children?: ReactNode;
 }
 
-function OrderSummaryItem({ label, value, children }: Props) {
+export default function OrderSummaryItem({ label, value, children }: Props) {
   return (
     <Flex justify="space-between" fontSize="sm">
       <Text
@@ -20,5 +20,3 @@ function OrderSummaryItem({ label, value, children }: Props) {
     </Flex>
   );
 }
-
-export default OrderSummaryItem;

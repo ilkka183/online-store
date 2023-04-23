@@ -14,7 +14,7 @@ interface Props {
   isSkeleton?: boolean;
 }
 
-function ProductCard({ product, isSkeleton = false }: Props) {
+export default function ProductCard({ product, isSkeleton = false }: Props) {
   if (isSkeleton)
     return (
       <Card>
@@ -36,5 +36,3 @@ function ProductCard({ product, isSkeleton = false }: Props) {
     </Card>
   );
 }
-
-export default ProductCard;

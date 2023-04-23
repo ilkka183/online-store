@@ -37,7 +37,6 @@ export default function CartElement({
         justify="space-between"
         display={{ base: "none", md: "flex" }}
       >
-        <div>{item.quantity}</div>
         <QuantitySelect
           value={item.quantity}
           onChange={(e) => {

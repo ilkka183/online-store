@@ -17,7 +17,7 @@ interface Props {
   image: string;
 }
 
-function ProductMeta({
+export default function ProductMeta({
   isGiftWrapping = true,
   image,
   name,
@@ -58,5 +58,3 @@ function ProductMeta({
     </Stack>
   );
 }
-
-export default ProductMeta;

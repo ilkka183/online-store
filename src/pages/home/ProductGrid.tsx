@@ -1,16 +1,14 @@
-import { GridItem, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { GridItem, SimpleGrid } from "@chakra-ui/react";
 import ProductCard from "./ProductCard";
-import productService, {
-  Product,
-  ProductQuery,
-} from "../../services/productService";
+import { Product, ProductQuery } from "../../services/productService";
+import useProducts from "../../hooks/useProducts";
 
 interface Props {
   productQuery: ProductQuery;
 }
 
-function ProductGrid({ productQuery }: Props) {
-  const { data, error, isLoading } = productService.useProducts(productQuery);
+export default function ProductGrid({ productQuery }: Props) {
+  const { data, error, isLoading } = useProducts(productQuery);
 
   if (error) return null;
 
@@ -35,5 +33,3 @@ function ProductGrid({ productQuery }: Props) {
     </SimpleGrid>
   );
 }
-
-export default ProductGrid;
