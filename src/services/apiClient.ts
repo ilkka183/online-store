@@ -7,9 +7,14 @@ export interface Entity {
   id: EntityId;
 }
 
+export interface ReplaceEntity<T> {
+  id: EntityId;
+  data: T;
+}
+
 export interface UpdateEntity<T> {
   id: EntityId;
-  payload: Partial<T>
+  data: Partial<T>;
 }
 
 const axiosClient = axios.create({
@@ -44,8 +49,12 @@ export default class APIClient<T extends Entity> {
     return axiosClient.post<T>(this.endpoint, data).then(res => res.data);
   }
  
+  public put = (data: ReplaceEntity<T>) => {
+    return axiosClient.put<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
+  }
+ 
   public patch = (data: UpdateEntity<T>) => {
-    return axiosClient.patch<T>(this.endpoint + "/" + data.id, data.payload).then(res => res.data);
+    return axiosClient.patch<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
   }
  
   public delete = (id: EntityId) => {

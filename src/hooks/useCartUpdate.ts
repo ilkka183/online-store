@@ -1,14 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import cartService, { CartItem } from "../services/cartService";
+import service from "../services/cartService";
+import useUpdate from "./useUpdate";
 
 export default function useCartUpdate() {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: cartService.patch,
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['carts'] })
-    },
-  });
+  return useUpdate(['carts'], service.patch);
 }

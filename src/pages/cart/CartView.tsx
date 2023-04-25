@@ -47,7 +47,7 @@ export default function CartView() {
                 key={item.id}
                 item={item}
                 onChangeQuantity={(quantity: number) =>
-                  updateCart({ id: item.id, payload: { quantity } })
+                  updateCart({ id: item.id, data: { quantity } })
                 }
                 onRemove={(id: number) => deleteCart(id)}
               />

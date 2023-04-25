@@ -1,4 +1,4 @@
-import { Entity, EntityId } from "../services/apiClient";
+import { Entity, EntityId, ReplaceEntity, UpdateEntity } from "../services/apiClient";
 
 export default class MockTable<T extends Entity> {
   private name: string;
@@ -26,6 +26,12 @@ export default class MockTable<T extends Entity> {
     localStorage.setItem(this.name, JSON.stringify(data));
   }
 
+  private find(data: T[], id: EntityId): T | null {
+    const entity = data.find(item => item.id == id);
+
+    return entity ? entity : null;
+  }
+
   public getAll(): T[] {
     return this.getData();
   }
@@ -33,47 +39,44 @@ export default class MockTable<T extends Entity> {
   public getById(id: EntityId): T | null {
     const data = this.getData();
 
-    const index = data.findIndex(item => item.id == id);
-
-    if (index >= 0)
-      return data[index];
-
-    return null;
+    return this.find(data, id);
   }
 
-  public post(entity: T): boolean {
+  public post(entity: T): T {
     const data = this.getData();
 
     const newData = [entity, ...data];
     this.setData(newData);
 
-    return true;
+    return entity;
   }
 
-  public put(entity: T): boolean {
+  public put(variables: ReplaceEntity<T>): T | null {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == entity.id ? entity : item);
+    const newData = data.map(item => item.id == variables.id ? variables.data : item);
     this.setData(newData);
 
-    return true;
+    return this.find(data, variables.id);
   }
 
-  public patch(id: EntityId, entityFields: Partial<T>): boolean {
+  public patch(variables: UpdateEntity<T>): T | null {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == id ? {...item, ...entityFields} : item);
+    const newData = data.map(item => item.id == variables.id ? {...item, ...variables.data} : item);
     this.setData(newData);
 
-    return true;
+    return this.find(data, variables.id);
   }
 
-  public delete(id: EntityId): boolean {
+  public delete(id: EntityId): T | null {
     const data = this.getData();
+    
+    const entity = this.find(data, id);
 
     const newData = data.filter(item => item.id != id);
     this.setData(newData);
 
-    return true;
+    return entity;
   }
 }
