@@ -9,17 +9,19 @@ import {
 } from "@chakra-ui/react";
 import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
-import useCarts from "../../hooks/useCarts";
-import useCartDelete from "../../hooks/useCartDelete";
-import useCartUpdate from "../../hooks/useCartUpdate";
+import useCartItems from "../../hooks/cart/useCartItems";
+import useDeleteCartItem from "../../hooks/cart/useDeleteCartItem";
+import useUpdateCartItem from "../../hooks/cart/useUpdateCartItem";
 
 export default function CartView() {
-  const { data: carts } = useCarts();
-  const { mutate: deleteCart } = useCartDelete();
-  const { mutate: updateCart } = useCartUpdate();
+  const userId = 1;
+
+  const { data: items } = useCartItems(userId);
+  const { mutate: deleteItem } = useDeleteCartItem(userId);
+  const { mutate: updateItem } = useUpdateCartItem(userId);
 
   const total =
-    carts?.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
+    items?.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
 
   return (
     <Box
@@ -36,20 +38,20 @@ export default function CartView() {
         <Stack spacing={{ base: "8", md: "10" }} flex="2">
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart{" "}
-            {carts && carts.length > 0
-              ? "(" + carts.length + "items)"
+            {items && items.length > 0
+              ? "(" + items.length + "items)"
               : " is empty"}
           </Heading>
 
           <Stack spacing="6">
-            {carts?.map((item) => (
+            {items?.map((item) => (
               <CartElement
                 key={item.id}
                 item={item}
                 onChangeQuantity={(quantity: number) =>
-                  updateCart({ id: item.id, data: { quantity } })
+                  updateItem({ id: item.id, data: { quantity } })
                 }
-                onRemove={(id: number) => deleteCart(id)}
+                onRemove={(id: number) => deleteItem(id)}
               />
             ))}
           </Stack>
