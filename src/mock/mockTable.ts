@@ -9,7 +9,7 @@ export default class MockTable<T extends Entity> {
     this.defaultData = defaultData;
   }
 
-  private getData(): T[] {
+  protected getData(): T[] {
     const localValue = localStorage.getItem(this.name);
 
     let data = [];
@@ -22,11 +22,11 @@ export default class MockTable<T extends Entity> {
     return data;
   }
 
-  private setData(data: T[]) {
+  protected setData(data: T[]) {
     localStorage.setItem(this.name, JSON.stringify(data));
   }
 
-  private find(data: T[], id: EntityId): T | null {
+  protected find(data: T[], id: EntityId): T | null {
     const entity = data.find(item => item.id == id);
 
     return entity ? entity : null;
@@ -45,7 +45,17 @@ export default class MockTable<T extends Entity> {
   public post(entity: T): T {
     const data = this.getData();
 
-    const newData = [entity, ...data];
+    if (entity.id === 0) {
+      let id: EntityId = 0;
+
+      for (let item of data)
+        if (item.id > id)
+          id = item.id;
+
+      entity.id = (id as number) + 1;
+    }
+
+    const newData = [...data, entity];
     this.setData(newData);
 
     return entity;
@@ -79,4 +89,5 @@ export default class MockTable<T extends Entity> {
 
     return entity;
   }
+  
 }

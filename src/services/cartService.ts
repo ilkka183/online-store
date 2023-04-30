@@ -1,5 +1,9 @@
 import APIClient, { Entity } from "./apiClient";
-import data from "../data/cartData";
+
+export interface Cart extends Entity {
+  id: number;
+  items: CartItem[];
+}
 
 export interface CartItem extends Entity {
   id: number;
@@ -11,4 +15,4 @@ export interface CartItem extends Entity {
   image: string;
 }
 
-export default new APIClient<CartItem>("/carts", data);
+export default new APIClient<Cart>("/carts");

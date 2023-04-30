@@ -9,19 +9,38 @@ import {
 } from "@chakra-ui/react";
 import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
-import useCartItems from "../../hooks/cart/useCartItems";
-import useDeleteCartItem from "../../hooks/cart/useDeleteCartItem";
-import useUpdateCartItem from "../../hooks/cart/useUpdateCartItem";
+import { CartItem } from "../../services/cartService";
+import useCarts from "../../hooks/cart/useCarts";
+import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
 export default function CartView() {
   const userId = 1;
 
-  const { data: items } = useCartItems(userId);
-  const { mutate: deleteItem } = useDeleteCartItem(userId);
-  const { mutate: updateItem } = useUpdateCartItem(userId);
+  const { data } = useCarts(userId);
+  const { replaceItem } = useReplaceCart(userId);
+
+  const cart = data ? data[0] : { id: 0, items: [] };
 
   const total =
-    items?.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
+    cart.items.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
+
+  const updateQuantity = (item: CartItem, quantity: number) => {
+    const newCart = {
+      ...cart,
+      items: cart.items.map((i) => (i === item ? { ...i, quantity } : i)),
+    };
+
+    replaceItem(newCart.id, newCart);
+  };
+
+  const deleteItem = (item: CartItem) => {
+    const newCart = {
+      ...cart,
+      items: cart.items.filter((i) => i !== item),
+    };
+
+    replaceItem(newCart.id, newCart);
+  };
 
   return (
     <Box
@@ -38,20 +57,20 @@ export default function CartView() {
         <Stack spacing={{ base: "8", md: "10" }} flex="2">
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart{" "}
-            {items && items.length > 0
-              ? "(" + items.length + "items)"
+            {cart.items.length > 0
+              ? "(" + cart.items.length + "items)"
               : " is empty"}
           </Heading>
 
           <Stack spacing="6">
-            {items?.map((item) => (
+            {cart.items.map((item) => (
               <CartElement
                 key={item.id}
                 item={item}
-                onChangeQuantity={(quantity: number) =>
-                  updateItem({ id: item.id, data: { quantity } })
+                onUpdateQuantity={(id: number, quantity: number) =>
+                  updateQuantity(item, quantity)
                 }
-                onRemove={(id: number) => deleteItem(id)}
+                onRemove={(id: number) => deleteItem(item)}
               />
             ))}
           </Stack>

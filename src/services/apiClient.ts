@@ -1,5 +1,4 @@
 import axios from "axios";
-import MockTable from "../data/mockTable";
 
 export type EntityId = string | number;
 
@@ -7,12 +6,12 @@ export interface Entity {
   id: EntityId;
 }
 
-export interface ReplaceEntity<T> {
+export interface ReplaceEntity<T extends Entity> {
   id: EntityId;
   data: T;
 }
 
-export interface UpdateEntity<T> {
+export interface UpdateEntity<T extends Entity> {
   id: EntityId;
   data: Partial<T>;
 }
@@ -24,17 +23,9 @@ const axiosClient = axios.create({
 
 export default class APIClient<T extends Entity> {
   protected endpoint: string;
-  private mockData: T[];
  
-  constructor(endpoint: string, mockData: T[]) {
+  constructor(endpoint: string) {
     this.endpoint = endpoint;
-    this.mockData = mockData;
-  }
-
-  protected mockName(): string { return this.endpoint.substring(1); }
-
-  public createMockTable() {
-    return new MockTable<T>(this.mockName(), this.mockData);
   }
 
   protected getAt = (endpoint: string) => {
@@ -43,6 +34,10 @@ export default class APIClient<T extends Entity> {
  
   public getAll = () => {
     return axiosClient.get<T[]>(this.endpoint).then(res => res.data);
+  }
+ 
+  public get = (id: EntityId) => {
+    return axiosClient.get<T>(this.endpoint + "/" + id).then(res => res.data);
   }
  
   public post = (data: T) => {

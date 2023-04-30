@@ -1,4 +1,4 @@
-import { User } from "../services/userService";
+import { User } from "../../services/userService";
 
 const data: User[] = [
   {

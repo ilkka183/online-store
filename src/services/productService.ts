@@ -1,5 +1,4 @@
 import APIClient, { Entity } from "./apiClient";
-import data from "../data/productData";
 
 export interface ProductQuery {
   categoryId?: number;
@@ -21,7 +20,7 @@ export interface Product extends Entity {
   rating: Rating;
 }
 
-class ProductClient extends APIClient<Product> {
+class ProductService extends APIClient<Product> {
 
   getProducts = (query: ProductQuery) => {
     let endpoint = this.endpoint;
@@ -34,4 +33,4 @@ class ProductClient extends APIClient<Product> {
   
 }
 
-export default new ProductClient("/products", data);
+export default new ProductService("/products");

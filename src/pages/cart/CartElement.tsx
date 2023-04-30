@@ -7,7 +7,7 @@ import { CartItem } from "../../services/cartService";
 interface Props {
   item: CartItem;
   isGiftWrapping?: boolean;
-  onChangeQuantity: (quantity: number) => void;
+  onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
   onClickGiftWrapping?: () => void;
 }
@@ -15,7 +15,7 @@ interface Props {
 export default function CartElement({
   item,
   isGiftWrapping,
-  onChangeQuantity,
+  onUpdateQuantity,
   onRemove,
 }: Props) {
   return (
@@ -40,7 +40,7 @@ export default function CartElement({
         <QuantitySelect
           value={item.quantity}
           onChange={(e) => {
-            onChangeQuantity(parseInt(e.currentTarget.value));
+            onUpdateQuantity(item.id, parseInt(e.currentTarget.value));
           }}
         />
         <PriceTag price={item.price} currency={item.currency} />
@@ -64,7 +64,7 @@ export default function CartElement({
         <QuantitySelect
           value={item.quantity}
           onChange={(e) => {
-            onChangeQuantity(parseInt(e.currentTarget.value));
+            onUpdateQuantity(item.id, parseInt(e.currentTarget.value));
           }}
         />
         <PriceTag price={item.price} currency={item.currency} />

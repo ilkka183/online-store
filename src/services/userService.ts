@@ -1,5 +1,4 @@
 import APIClient, { Entity } from "./apiClient";
-import data from "../data/userData";
 
 export interface User extends Entity {
   id: number;
@@ -7,4 +6,4 @@ export interface User extends Entity {
   lastName: string;
 }
 
-export default new APIClient<User>("/users", data);
+export default new APIClient<User>("/users");

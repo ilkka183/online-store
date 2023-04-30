@@ -8,10 +8,11 @@ interface DeleteContext<T> {
 export default function useDelete<T extends Entity>(queryKey: QueryKey, mutationFn: MutationFunction<T, EntityId>) {
   const queryClient = useQueryClient();
 
-  return useMutation<T, Error, EntityId, DeleteContext<T>>({
+  const result = useMutation<T, Error, EntityId, DeleteContext<T>>({
     mutationFn,
 
     onMutate: (id: EntityId) => {
+      // Optimistic delete
       const previousData = queryClient.getQueryData<T[]>(queryKey) || [];
 
       queryClient.setQueryData<T[]>(queryKey, (items => items?.filter(item => item.id !== id)));
@@ -26,4 +27,8 @@ export default function useDelete<T extends Entity>(queryKey: QueryKey, mutation
       queryClient.setQueryData<T[]>(queryKey, context.previousData);
     },
   });
+
+  const deleteItem = (id: EntityId) => result.mutate(id);
+
+  return { ...result, deleteItem }
 }

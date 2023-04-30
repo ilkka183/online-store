@@ -4,7 +4,7 @@ import CreateAccountView from "./pages/user/CreateAccountView";
 import HomeView from "./pages/home/HomeView";
 import SignInView from "./pages/user/SignInView";
 import NavBar from "./components/NavBar";
-import createMockServer from "./data/mock";
+import createMockServer from "./mock/mock";
 import "./App.css";
 
 createMockServer();

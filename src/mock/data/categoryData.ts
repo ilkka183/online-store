@@ -1,4 +1,4 @@
-import { Category } from "../services/categoryService";
+import { Category } from "../../services/categoryService";
 
 const data: Category[] = [
   { id: 1, name: "electronics" },
