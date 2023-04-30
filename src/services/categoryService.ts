@@ -5,4 +5,7 @@ export interface Category extends Entity {
   name: string;
 }
 
-export default new APIClient<Category>("/categories");
+class CategoryAPI extends APIClient<Category> {
+}
+
+export default new CategoryAPI("/categories");

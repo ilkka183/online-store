@@ -20,7 +20,7 @@ export interface Product extends Entity {
   rating: Rating;
 }
 
-class ProductService extends APIClient<Product> {
+class ProductAPI extends APIClient<Product> {
 
   getProducts = (query: ProductQuery) => {
     let endpoint = this.endpoint;
@@ -28,9 +28,9 @@ class ProductService extends APIClient<Product> {
     if (query.categoryId)
       endpoint += "/category/" + query.categoryId;
 
-    return this.getAt(endpoint);
+    return this.getAllAt(endpoint);
   }
   
 }
 
-export default new ProductService("/products");
+export default new ProductAPI("/products");

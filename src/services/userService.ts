@@ -6,4 +6,7 @@ export interface User extends Entity {
   lastName: string;
 }
 
-export default new APIClient<User>("/users");
+class UserAPI extends APIClient<User> {
+}
+
+export default new UserAPI("/users");

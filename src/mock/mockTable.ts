@@ -1,4 +1,4 @@
-import { Entity, EntityId, ReplaceEntity, UpdateEntity } from "../services/apiClient";
+import { Entity, EntityId } from "../services/apiClient";
 
 export default abstract class MockTable<T extends Entity> {
   private name: string;
@@ -36,7 +36,7 @@ export default abstract class MockTable<T extends Entity> {
     return this.getData();
   }
 
-  public getById(id: EntityId): T | null {
+  public get(id: EntityId): T | null {
     const data = this.getData();
 
     return this.find(data, id);

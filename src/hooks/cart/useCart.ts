@@ -1,11 +1,11 @@
-import service, { Cart } from "../../services/cartService";
 import useGet from "../useGet";
-import { KEY_CART_ITEMS } from "../queryKey";
+import api, { Cart } from "../../services/cartService";
+import { KEY_CART } from "../queryKey";
 
 export default function useCart(userId: number) {
-  const result = useGet<Cart>(KEY_CART_ITEMS(userId), () => service.get(userId));
+  const result = useGet<Cart>(KEY_CART(userId), () => api.get(userId));
   
-  const cart = result.data ? result.data : { id: 0, items: [] };
+  const cart = result.data ? result.data : { id: 0, items: [] } as Cart;
 
   return {...result, cart};
 }

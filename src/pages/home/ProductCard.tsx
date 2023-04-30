@@ -8,6 +8,7 @@ import {
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
+import { Cart, CartItem } from "../../services/cartService";
 import { Product } from "../../services/productService";
 import useCart from "../../hooks/cart/useCart";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
@@ -26,17 +27,19 @@ export default function ProductCard({ product, isSkeleton = false }: Props) {
   const handleAddToCart = () => {
     if (cart.items.find((item) => item.name == product.title)) {
       // Product already exists. Add quantity.
-      const newCart = {
+      const newCart: Cart = {
         ...cart,
         items: cart.items.map((i) =>
-          i.name == product.title ? { ...i, quantity: i.quantity + 1 } : i
+          i.name == product.title
+            ? ({ ...i, quantity: i.quantity + 1 } as CartItem)
+            : i
         ),
       };
 
       replaceItem(newCart.id, newCart);
     } else {
       // A new product will be added.
-      const newCart = {
+      const newCart: Cart = {
         ...cart,
         items: [
           ...cart.items,
@@ -48,7 +51,7 @@ export default function ProductCard({ product, isSkeleton = false }: Props) {
             quantity: 1,
             description: product.description,
             image: product.image,
-          },
+          } as CartItem,
         ],
       };
 

@@ -29,7 +29,7 @@ export default function createMockServer() {
 
       // Users
       this.get("/users", () => users.getAll());
-      this.get("/users/:id", (schema, request) => users.getById(request.params.id));
+      this.get("/users/:id", (schema, request) => users.get(request.params.id));
       this.put("/users/:id", (schema, request) => carts.put(request.params.id, JSON.parse(request.requestBody)));
     },
   });

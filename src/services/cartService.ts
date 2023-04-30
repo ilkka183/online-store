@@ -15,4 +15,7 @@ export interface CartItem extends Entity {
   image: string;
 }
 
-export default new APIClient<Cart>("/carts");
+class CartAPI extends APIClient<Cart> {
+}
+
+export default new CartAPI("/carts");
