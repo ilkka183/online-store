@@ -1,7 +1,7 @@
-import { Cart } from "../services/cartService";
-import { EntityId } from "../services/apiClient";
-import MockTable from "./mockTable";
-import data from "./data/cartData";
+import MockTable from "../mockTable";
+import { Cart } from "../../services/cartService";
+import { EntityId } from "../../services/apiClient";
+import data from "../data/cartData";
 
 export default class CartTable extends MockTable<Cart> {
 
@@ -15,10 +15,10 @@ export default class CartTable extends MockTable<Cart> {
     return this.find(data, id);
   }
 
-  public setCart(id: EntityId, cart: Cart): Cart | null {
+  public setCart(id: EntityId, entity: Cart): Cart | null {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == id ? cart : item);
+    const newData = data.map(item => item.id == id ? entity : item);
     this.setData(newData);
 
     return this.find(data, id);

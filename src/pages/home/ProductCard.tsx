@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Product } from "../../services/productService";
-import useCarts from "../../hooks/cart/useCarts";
+import useCart from "../../hooks/cart/useCart";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
 interface Props {
@@ -20,10 +20,8 @@ interface Props {
 export default function ProductCard({ product, isSkeleton = false }: Props) {
   const userId = 1;
 
-  const { data } = useCarts(userId);
+  const { cart } = useCart(userId);
   const { replaceItem } = useReplaceCart(userId);
-
-  const cart = data ? data[0] : { id: 0, items: [] };
 
   const handleAddToCart = () => {
     if (cart.items.find((item) => item.name == product.title)) {

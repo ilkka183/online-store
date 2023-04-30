@@ -1,6 +1,6 @@
 import { Entity, EntityId, ReplaceEntity, UpdateEntity } from "../services/apiClient";
 
-export default class MockTable<T extends Entity> {
+export default abstract class MockTable<T extends Entity> {
   private name: string;
   private defaultData: T[];
 
@@ -61,22 +61,22 @@ export default class MockTable<T extends Entity> {
     return entity;
   }
 
-  public put(variables: ReplaceEntity<T>): T | null {
+  public put(id: EntityId, entity: T): T | null {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == variables.id ? variables.data : item);
+    const newData = data.map(item => item.id == id ? entity : item);
     this.setData(newData);
 
-    return this.find(data, variables.id);
+    return this.find(data, id);
   }
 
-  public patch(variables: UpdateEntity<T>): T | null {
+  public patch(id: EntityId, entity: Partial<T>): T | null {
     const data = this.getData();
 
-    const newData = data.map(item => item.id == variables.id ? {...item, ...variables.data} : item);
+    const newData = data.map(item => item.id == id ? {...item, ...entity} : item);
     this.setData(newData);
 
-    return this.find(data, variables.id);
+    return this.find(data, id);
   }
 
   public delete(id: EntityId): T | null {

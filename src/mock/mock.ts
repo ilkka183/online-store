@@ -1,9 +1,9 @@
 import { createServer } from "miragejs";
 
-import CartTable from "./cartTable";
-import CategoryTable from "./categoryTable";
-import ProductTable from "./productTable";
-import UserTable from "./userTable";
+import CartTable from "./tables/cartTable";
+import CategoryTable from "./tables/categoryTable";
+import ProductTable from "./tables/productTable";
+import UserTable from "./tables/userTable";
 
 const carts = new CartTable();
 const categories = new CategoryTable();
@@ -30,6 +30,7 @@ export default function createMockServer() {
       // Users
       this.get("/users", () => users.getAll());
       this.get("/users/:id", (schema, request) => users.getById(request.params.id));
+      this.put("/users/:id", (schema, request) => carts.put(request.params.id, JSON.parse(request.requestBody)));
     },
   });
 

@@ -10,16 +10,14 @@ import {
 import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
 import { CartItem } from "../../services/cartService";
-import useCarts from "../../hooks/cart/useCarts";
+import useCart from "../../hooks/cart/useCart";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
 export default function CartView() {
   const userId = 1;
 
-  const { data } = useCarts(userId);
+  const { cart } = useCart(userId);
   const { replaceItem } = useReplaceCart(userId);
-
-  const cart = data ? data[0] : { id: 0, items: [] };
 
   const total =
     cart.items.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;
