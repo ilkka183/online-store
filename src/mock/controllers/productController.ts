@@ -1,8 +1,8 @@
-import MockTable from "../mockTable";
+import Controller from "../controller";
 import { Product } from "../../services/productService";
 import data from "../data/productData";
 
-export default class ProductTable extends MockTable<Product> {
+export default class ProductController extends Controller<Product> {
 
   constructor() {
     super("products", data);

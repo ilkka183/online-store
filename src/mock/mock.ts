@@ -1,14 +1,14 @@
 import { createServer } from "miragejs";
 
-import CartTable from "./tables/cartTable";
-import CategoryTable from "./tables/categoryTable";
-import ProductTable from "./tables/productTable";
-import UserTable from "./tables/userTable";
+import CartController from "./controllers/cartController";
+import CategoryController from "./controllers/categoryController";
+import ProductController from "./controllers/productController";
+import UserController from "./controllers/userController";
 
-const carts = new CartTable();
-const categories = new CategoryTable();
-const products = new ProductTable();
-const users = new UserTable();
+const cart = new CartController();
+const category = new CategoryController();
+const product = new ProductController();
+const user = new UserController();
 
 export default function createMockServer() {
   const server = createServer({
@@ -16,21 +16,21 @@ export default function createMockServer() {
       this.namespace = "api";
 
       // Carts
-      this.get("/carts", (schema, request) => carts.getAll());
-      this.get("/carts/:id", (schema, request) => carts.getCart(request.params.id));
-      this.put("/carts/:id", (schema, request) => carts.setCart(request.params.id, JSON.parse(request.requestBody)));
+      this.get("/carts", (schema, request) => cart.getAll());
+      this.get("/carts/:id", (schema, request) => cart.getCart(request.params.id));
+      this.put("/carts/:id", (schema, request) => cart.setCart(request.params.id, JSON.parse(request.requestBody)));
 
       // Categories
-      this.get("/categories", () => categories.getAll());
+      this.get("/categories", () => category.getAll());
 
       // Products
-      this.get("/products", () => products.getAll());
-      this.get("/products/category/:id", (schema, request) => products.getAll().filter(item => item.categoryId.toString() === request.params.id));
+      this.get("/products", () => product.getAll());
+      this.get("/products/category/:id", (schema, request) => product.getAll().filter(item => item.categoryId.toString() === request.params.id));
 
       // Users
-      this.get("/users", () => users.getAll());
-      this.get("/users/:id", (schema, request) => users.get(request.params.id));
-      this.put("/users/:id", (schema, request) => carts.put(request.params.id, JSON.parse(request.requestBody)));
+      this.get("/users", () => user.getAll());
+      this.get("/users/:id", (schema, request) => user.get(request.params.id));
+      this.put("/users/:id", (schema, request) => user.put(request.params.id, JSON.parse(request.requestBody)));
     },
   });
 

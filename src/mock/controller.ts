@@ -1,6 +1,6 @@
 import { Entity, EntityId } from "../services/apiClient";
 
-export default abstract class MockTable<T extends Entity> {
+export default abstract class Controller<T extends Entity> {
   private name: string;
   private defaultData: T[];
 

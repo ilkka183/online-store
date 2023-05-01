@@ -1,9 +1,9 @@
-import MockTable from "../mockTable";
+import Controller from "../controller";
 import { Cart } from "../../services/cartService";
 import { EntityId } from "../../services/apiClient";
 import data from "../data/cartData";
 
-export default class CartTable extends MockTable<Cart> {
+export default class CartController extends Controller<Cart> {
 
   constructor() {
     super("carts", data);
