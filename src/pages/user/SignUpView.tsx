@@ -15,14 +15,16 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import userApi from "../../services/userService";
 
 export default function CreateAccountView() {
   const navigate = useNavigate();
+  const { register } = useForm();
 
-  const [sign, setSign] = useState({
+  const [value, setValue] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -30,20 +32,36 @@ export default function CreateAccountView() {
     password2: "",
   });
 
-  const [errors, setErrors] = useState({ email: "", password: "" });
+  const [error, setError] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password1: "",
+    password2: "",
+  });
 
   const handleSignUp = async () => {
-    console.log(sign);
+    console.log(value);
 
-    if (sign.password1 !== sign.password2) {
-      setErrors({ ...errors, password: "Passwords are not identicals" });
+    if (value.firstName === "") {
+      setError({ ...error, firstName: "First Name is required" });
       return;
     }
 
-    const user = await userApi.getByEmail(sign.email);
+    if (value.lastName === "") {
+      setError({ ...error, lastName: "Last Name is required" });
+      return;
+    }
+
+    if (value.password1 !== value.password2) {
+      setError({ ...error, password2: "Passwords are not identicals" });
+      return;
+    }
+
+    const user = await userApi.getByEmail(value.email);
 
     if (user != null) {
-      setErrors({ ...errors, email: "Email already exists" });
+      setError({ ...error, email: "Email already exists" });
       return;
     }
 
@@ -75,67 +93,50 @@ export default function CreateAccountView() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
+                <FormControl
+                  id="firstName"
+                  isRequired
+                  isInvalid={error.firstName !== ""}
+                >
                   <FormLabel>First Name</FormLabel>
-                  <Input
-                    type="text"
-                    value={sign.firstName}
-                    onChange={(event) =>
-                      setSign({ ...sign, firstName: event.target.value })
-                    }
-                  />
+                  <Input type="text" {...register("firstName")} />
+                  <FormErrorMessage>{error.firstName}</FormErrorMessage>
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName" isRequired>
+                <FormControl
+                  id="lastName"
+                  isRequired
+                  isInvalid={error.lastName !== ""}
+                >
                   <FormLabel>Last Name</FormLabel>
-                  <Input
-                    type="text"
-                    value={sign.lastName}
-                    onChange={(event) =>
-                      setSign({ ...sign, lastName: event.target.value })
-                    }
-                  />
+                  <Input type="text" {...register("lastName")} />
+                  <FormErrorMessage>{error.lastName}</FormErrorMessage>
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="email" isRequired isInvalid={errors.email !== ""}>
+            <FormControl id="email" isRequired isInvalid={error.email !== ""}>
               <FormLabel>Email address</FormLabel>
-              <EmailInput
-                value={sign.email}
-                onChange={(event) =>
-                  setSign({ ...sign, email: event.target.value })
-                }
-              />
-              <FormErrorMessage>{errors.email}</FormErrorMessage>
+              <Input type="email" {...register("email")} />
+              <FormErrorMessage>{error.email}</FormErrorMessage>
             </FormControl>
             <FormControl
               id="password1"
               isRequired
-              isInvalid={errors.password !== ""}
+              isInvalid={error.password1 !== ""}
             >
               <FormLabel>Password</FormLabel>
-              <PasswordInput
-                value={sign.password1}
-                onChange={(event) =>
-                  setSign({ ...sign, password1: event.target.value })
-                }
-              />
-              <FormErrorMessage>{errors.password}</FormErrorMessage>
+              <Input type="password" {...register("password1")} />
+              <FormErrorMessage>{error.password1}</FormErrorMessage>
             </FormControl>
             <FormControl
               id="password2"
               isRequired
-              isInvalid={errors.password !== ""}
+              isInvalid={error.password2 !== ""}
             >
               <FormLabel>Password again</FormLabel>
-              <PasswordInput
-                value={sign.password2}
-                onChange={(event) =>
-                  setSign({ ...sign, password2: event.target.value })
-                }
-              />
-              <FormErrorMessage>{errors.password}</FormErrorMessage>
+              <Input type="password" {...register("password2")} />
+              <FormErrorMessage>{error.password2}</FormErrorMessage>
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button

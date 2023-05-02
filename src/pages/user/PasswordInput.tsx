@@ -2,21 +2,12 @@ import { useState } from "react";
 import { Input, InputGroup, InputRightElement, Button } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-interface Props {
-  value: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-}
-
-export default function PasswordInput({ value, onChange }: Props) {
+export default function PasswordInput({ ...props }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <InputGroup>
-      <Input
-        type={showPassword ? "text" : "password"}
-        value={value}
-        onChange={onChange}
-      />
+      <Input type={showPassword ? "text" : "password"} {...props} />
       <InputRightElement h={"full"}>
         <Button
           variant={"ghost"}

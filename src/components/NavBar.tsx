@@ -18,7 +18,7 @@ export default function NavBar({ onSearch }: Props) {
         <Image src={logo} boxSize="60px" onClick={() => navigate("/home")} />
         <SearchInput onSearch={onSearch} />
         <ColorModeSwitch />
-        <Link as={RouterLink} to="/createaccount">
+        <Link as={RouterLink} to="/signup">
           Create account
         </Link>
         <Button onClick={() => navigate("/signin")}>Sign in</Button>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -11,33 +11,42 @@ import {
   FormLabel,
   Heading,
   HStack,
+  Input,
   Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useForm, FieldValues } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import userApi from "../../services/userService";
 
+const schema = z.object({
+  email: z.string().min(3),
+  password: z.string().min(3),
+});
+
+type FormData = z.infer<typeof schema>;
+
 export default function SignInView() {
   const navigate = useNavigate();
-  const [sign, setSign] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const handleSignIn = async () => {
-    const user = await userApi.getByEmail(sign.email);
+  const onSignIn = async (data: FieldValues) => {
+    const user = await userApi.getByEmail(data.email);
 
-    if (user == null || user.password !== sign.password) {
-      setError("Invalid email address or password");
+    if (user == null || user.password !== data.password) {
       return;
     }
 
     navigate("/home");
-  };
-
-  const handleSignUp = () => {
-    navigate("/signup");
   };
 
   return (
@@ -61,25 +70,18 @@ export default function SignInView() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email" isInvalid={error !== ""}>
+            <FormControl id="email" isInvalid={errors.email !== undefined}>
               <FormLabel>Email address</FormLabel>
-              <EmailInput
-                value={sign.email}
-                onChange={(event) =>
-                  setSign({ ...sign, email: event.target.value })
-                }
-              />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <Input type="email" {...register("email")} />
+              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
             </FormControl>
-            <FormControl id="password" isInvalid={error !== ""}>
+            <FormControl
+              id="password"
+              isInvalid={errors.password !== undefined}
+            >
               <FormLabel>Password</FormLabel>
-              <PasswordInput
-                value={sign.password}
-                onChange={(event) =>
-                  setSign({ ...sign, password: event.target.value })
-                }
-              />
-              <FormErrorMessage>{error}</FormErrorMessage>
+              <Input type="password" {...register("password")} />
+              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
             <Stack spacing={5}>
               <Stack
@@ -90,7 +92,11 @@ export default function SignInView() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
-              <Button size="lg" colorScheme="blue" onClick={handleSignIn}>
+              <Button
+                size="lg"
+                colorScheme="blue"
+                onClick={handleSubmit(onSignIn)}
+              >
                 Sign in
               </Button>
               <HStack>
@@ -100,7 +106,7 @@ export default function SignInView() {
                 </Text>
                 <Divider />
               </HStack>
-              <Button colorScheme="gray" onClick={handleSignUp}>
+              <Button colorScheme="gray" onClick={() => navigate("/signup")}>
                 Create account
               </Button>
             </Stack>
