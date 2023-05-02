@@ -8,4 +8,12 @@ export default class UserController extends Controller<User> {
     super("users", data);
   }
 
+  public getByEmail(email: string): User | null {
+    const data = this.getData();
+
+    const entity = data.find(item => item.email == email);
+
+    return entity ? entity : null;
+  }
+
 }

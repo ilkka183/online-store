@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import CartView from "./pages/cart/CartView";
-import CreateAccountView from "./pages/user/CreateAccountView";
+import SignUpView from "./pages/user/SignUpView";
 import HomeView from "./pages/home/HomeView";
 import SignInView from "./pages/user/SignInView";
 import NavBar from "./components/NavBar";
-import createMockServer from "./mock/mock";
+import createMockServer from "./mock/mockServer";
 import "./App.css";
 
 createMockServer();
@@ -23,7 +23,7 @@ function App() {
           <Route path="/home" element={<HomeView />} />
           <Route path="/cart" element={<CartView />} />
           <Route path="/signin" element={<SignInView />} />
-          <Route path="/createaccount" element={<CreateAccountView />} />
+          <Route path="/signup" element={<SignUpView />} />
         </Routes>
       </div>
     </>

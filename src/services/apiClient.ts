@@ -32,8 +32,8 @@ export default class APIClient<T extends Entity> {
     return axiosClient.get<T[]>(endpoint).then(res => res.data);
   }
  
-  public getAt = (endpoint: string, id: EntityId) => {
-    return axiosClient.get<T>(endpoint + "/" + id).then(res => res.data);
+  public getAt = (endpoint: string) => {
+    return axiosClient.get<T>(endpoint).then(res => res.data);
   }
 
   public getAll = () => {

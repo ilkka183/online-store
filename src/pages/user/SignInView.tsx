@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -6,6 +7,7 @@ import {
   Divider,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   HStack,
@@ -16,9 +18,27 @@ import {
 } from "@chakra-ui/react";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
+import userApi from "../../services/userService";
 
 export default function SignInView() {
   const navigate = useNavigate();
+  const [sign, setSign] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
+
+  const handleSignIn = async () => {
+    const user = await userApi.getByEmail(sign.email);
+
+    if (user == null || user.password !== sign.password) {
+      setError("Invalid email address or password");
+      return;
+    }
+
+    navigate("/home");
+  };
+
+  const handleSignUp = () => {
+    navigate("/signup");
+  };
 
   return (
     <Flex
@@ -41,13 +61,25 @@ export default function SignInView() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email">
+            <FormControl id="email" isInvalid={error !== ""}>
               <FormLabel>Email address</FormLabel>
-              <EmailInput />
+              <EmailInput
+                value={sign.email}
+                onChange={(event) =>
+                  setSign({ ...sign, email: event.target.value })
+                }
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={error !== ""}>
               <FormLabel>Password</FormLabel>
-              <PasswordInput />
+              <PasswordInput
+                value={sign.password}
+                onChange={(event) =>
+                  setSign({ ...sign, password: event.target.value })
+                }
+              />
+              <FormErrorMessage>{error}</FormErrorMessage>
             </FormControl>
             <Stack spacing={5}>
               <Stack
@@ -58,7 +90,7 @@ export default function SignInView() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
-              <Button size="lg" colorScheme="blue">
+              <Button size="lg" colorScheme="blue" onClick={handleSignIn}>
                 Sign in
               </Button>
               <HStack>
@@ -68,10 +100,7 @@ export default function SignInView() {
                 </Text>
                 <Divider />
               </HStack>
-              <Button
-                colorScheme="gray"
-                onClick={() => navigate("/createaccount")}
-              >
+              <Button colorScheme="gray" onClick={handleSignUp}>
                 Create account
               </Button>
             </Stack>
