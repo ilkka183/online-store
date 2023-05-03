@@ -20,15 +20,20 @@ import PasswordInput from "./PasswordInput";
 import userApi from "../../services/userService";
 import useFields from "../../hooks/useFields";
 
+interface Data {
+  email: string;
+  password: string;
+}
+
 export default function SignInView() {
   const navigate = useNavigate();
 
-  const { properties, handleSubmit, errors } = useFields([
+  const { properties, handleSubmit, errors } = useFields<Data>([
     { name: "email", type: "string", required: true, minLength: 5 },
     { name: "password", type: "string", required: true, minLength: 5 },
   ]);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: Data) => {
     console.log(data);
 
     const user = await userApi.getByEmail(data.email);

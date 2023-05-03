@@ -9,7 +9,7 @@ interface Field {
   maxLength?: number;
 } 
 
-export default function useFields(fields: Field[]) {
+export default function useFields<T>(fields: Field[]) {
 
   const [validated, setValidated] = useState(false);
 
@@ -20,14 +20,14 @@ export default function useFields(fields: Field[]) {
 
   const [data, setData] = useState(fields);
 
-  const getErrors = (validated: boolean) => {
+  const getErrors = (validate: boolean) => {
     let isValid: boolean = true;
     const errors: any = {};
   
     for (const field of data) {
       errors[field.name] = "";
   
-      if (validated) {
+      if (validate) {
         if (field.required && field.value === "") {
           errors[field.name] = "Field is required";
           isValid = false;
@@ -52,10 +52,9 @@ export default function useFields(fields: Field[]) {
   }
 
   const result = getErrors(validated);
-  const isValid = result.isValid;
   const errors = result.errors;
 
-  const getData = () => {
+  const getData: any = () => {
     let values: any = {};
 
     for (const field of data) {
@@ -78,13 +77,14 @@ export default function useFields(fields: Field[]) {
   }
 
   const validate = (): boolean => {
-    const result = getErrors(true);
     setValidated(true);
 
-    return result.isValid;
+    const { isValid } = getErrors(true);
+
+    return isValid;
   }
 
-  const handleSubmit = (onSubmit: (data: Object) => void) => {
+  const handleSubmit = (onSubmit: (data: T) => void) => {
     if (validate()) {
       const data = getData();
       onSubmit(data);
