@@ -23,15 +23,13 @@ import useFields from "../../hooks/useFields";
 export default function SignInView() {
   const navigate = useNavigate();
 
-  const { properties, getData, errors } = useFields([
-    { name: "email", type: "string" },
-    { name: "password", type: "string" },
+  const { properties, handleSubmit, errors } = useFields([
+    { name: "email", type: "string", required: true, minLength: 5 },
+    { name: "password", type: "string", required: true, minLength: 5 },
   ]);
 
-  const handleSignIn = async () => {
-    const data = getData();
+  const onSubmit = async (data: any) => {
     console.log(data);
-    return;
 
     const user = await userApi.getByEmail(data.email);
 
@@ -82,7 +80,11 @@ export default function SignInView() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
-              <Button size="lg" colorScheme="blue" onClick={handleSignIn}>
+              <Button
+                size="lg"
+                colorScheme="blue"
+                onClick={() => handleSubmit(onSubmit)}
+              >
                 Sign in
               </Button>
               <HStack>

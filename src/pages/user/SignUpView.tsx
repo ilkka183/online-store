@@ -23,11 +23,11 @@ export default function CreateAccountView() {
   const navigate = useNavigate();
 
   const { properties, getData, errors } = useFields([
-    { name: "firstName", type: "string" },
-    { name: "lastName", type: "string" },
-    { name: "email", type: "string" },
-    { name: "password1", type: "string" },
-    { name: "password2", type: "string" },
+    { name: "firstName", type: "string", required: true },
+    { name: "lastName", type: "string", required: true },
+    { name: "email", type: "string", required: true, minLength: 5 },
+    { name: "password1", type: "string", required: true, minLength: 5 },
+    { name: "password2", type: "string", required: true, minLength: 5 },
   ]);
 
   const handleSignUp = async () => {
