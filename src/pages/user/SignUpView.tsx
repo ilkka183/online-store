@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -8,60 +7,37 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Input,
   Link,
   HStack,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
+import TextInput from "./TextInput";
 import userApi from "../../services/userService";
+import useFields from "../../hooks/useFields";
 
 export default function CreateAccountView() {
   const navigate = useNavigate();
-  const { register } = useForm();
 
-  const [value, setValue] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password1: "",
-    password2: "",
-  });
-
-  const [error, setError] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password1: "",
-    password2: "",
-  });
+  const { properties, getData, errors } = useFields([
+    { name: "firstName", type: "string" },
+    { name: "lastName", type: "string" },
+    { name: "email", type: "string" },
+    { name: "password1", type: "string" },
+    { name: "password2", type: "string" },
+  ]);
 
   const handleSignUp = async () => {
-    console.log(value);
+    const data = getData();
+    console.log(data);
 
-    if (value.firstName === "") {
-      setError({ ...error, firstName: "First Name is required" });
-      return;
-    }
-
-    if (value.lastName === "") {
-      setError({ ...error, lastName: "Last Name is required" });
-      return;
-    }
-
-    if (value.password1 !== value.password2) {
-      setError({ ...error, password2: "Passwords are not identicals" });
-      return;
-    }
-
-    const user = await userApi.getByEmail(value.email);
+    const user = await userApi.getByEmail(data.email);
 
     if (user != null) {
-      setError({ ...error, email: "Email already exists" });
+      //      setError({ ...error, email: "Email already exists" });
       return;
     }
 
@@ -96,47 +72,47 @@ export default function CreateAccountView() {
                 <FormControl
                   id="firstName"
                   isRequired
-                  isInvalid={error.firstName !== ""}
+                  isInvalid={errors.firstName !== ""}
                 >
                   <FormLabel>First Name</FormLabel>
-                  <Input type="text" {...register("firstName")} />
-                  <FormErrorMessage>{error.firstName}</FormErrorMessage>
+                  <TextInput {...properties("firstName")} />
+                  <FormErrorMessage>{errors.firstName}</FormErrorMessage>
                 </FormControl>
               </Box>
               <Box>
                 <FormControl
                   id="lastName"
                   isRequired
-                  isInvalid={error.lastName !== ""}
+                  isInvalid={errors.lastName !== ""}
                 >
                   <FormLabel>Last Name</FormLabel>
-                  <Input type="text" {...register("lastName")} />
-                  <FormErrorMessage>{error.lastName}</FormErrorMessage>
+                  <TextInput {...properties("lastName")} />
+                  <FormErrorMessage>{errors.lastName}</FormErrorMessage>
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="email" isRequired isInvalid={error.email !== ""}>
+            <FormControl id="email" isRequired isInvalid={errors.email !== ""}>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" {...register("email")} />
-              <FormErrorMessage>{error.email}</FormErrorMessage>
+              <EmailInput {...properties("email")} />
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
             </FormControl>
             <FormControl
               id="password1"
               isRequired
-              isInvalid={error.password1 !== ""}
+              isInvalid={errors.password1 !== ""}
             >
               <FormLabel>Password</FormLabel>
-              <Input type="password" {...register("password1")} />
-              <FormErrorMessage>{error.password1}</FormErrorMessage>
+              <PasswordInput {...properties("password1")} />
+              <FormErrorMessage>{errors.password1}</FormErrorMessage>
             </FormControl>
             <FormControl
               id="password2"
               isRequired
-              isInvalid={error.password2 !== ""}
+              isInvalid={errors.password2 !== ""}
             >
               <FormLabel>Password again</FormLabel>
-              <Input type="password" {...register("password2")} />
-              <FormErrorMessage>{error.password2}</FormErrorMessage>
+              <PasswordInput {...properties("password2")} />
+              <FormErrorMessage>{errors.password2}</FormErrorMessage>
             </FormControl>
             <Stack spacing={10} pt={2}>
               <Button

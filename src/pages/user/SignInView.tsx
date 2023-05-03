@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -11,35 +10,29 @@ import {
   FormLabel,
   Heading,
   HStack,
-  Input,
   Link,
   Stack,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useForm, FieldValues } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import userApi from "../../services/userService";
-
-const schema = z.object({
-  email: z.string().min(3),
-  password: z.string().min(3),
-});
-
-type FormData = z.infer<typeof schema>;
+import useFields from "../../hooks/useFields";
 
 export default function SignInView() {
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const onSignIn = async (data: FieldValues) => {
+  const { properties, getData, errors } = useFields([
+    { name: "email", type: "string" },
+    { name: "password", type: "string" },
+  ]);
+
+  const handleSignIn = async () => {
+    const data = getData();
+    console.log(data);
+    return;
+
     const user = await userApi.getByEmail(data.email);
 
     if (user == null || user.password !== data.password) {
@@ -70,18 +63,15 @@ export default function SignInView() {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="email" isInvalid={errors.email !== undefined}>
+            <FormControl id="email" isInvalid={errors.email !== ""}>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" {...register("email")} />
-              <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
+              <EmailInput {...properties("email")} />
+              <FormErrorMessage>{errors.email}</FormErrorMessage>
             </FormControl>
-            <FormControl
-              id="password"
-              isInvalid={errors.password !== undefined}
-            >
+            <FormControl id="password" isInvalid={errors.password !== ""}>
               <FormLabel>Password</FormLabel>
-              <Input type="password" {...register("password")} />
-              <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
+              <PasswordInput {...properties("password")} />
+              <FormErrorMessage>{errors.password}</FormErrorMessage>
             </FormControl>
             <Stack spacing={5}>
               <Stack
@@ -92,11 +82,7 @@ export default function SignInView() {
                 <Checkbox>Remember me</Checkbox>
                 <Link color={"blue.400"}>Forgot password?</Link>
               </Stack>
-              <Button
-                size="lg"
-                colorScheme="blue"
-                onClick={handleSubmit(onSignIn)}
-              >
+              <Button size="lg" colorScheme="blue" onClick={handleSignIn}>
                 Sign in
               </Button>
               <HStack>
