@@ -9,6 +9,7 @@ export default class Table<T extends Entity> {
   constructor(controller: Controller<T>) {
     this.name = "STORE_" + controller.name.toUpperCase() + "_TABLE";
     this.defaultData = controller.defaultData;
+    
     this.data = this.readData();
   }
 

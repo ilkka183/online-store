@@ -23,10 +23,6 @@ export interface Client extends Entity {
 
 class ClientAPI extends APIClient<Client> {
 
-  public getByEmail = (email: string) => {
-    return this.client.get<Client>(this.endpoint + "/signin/" + email).then(res => res.data);
-  }
-
   public signIn = (data: SignInData) => {
     return this.client.post<Partial<Client>>(this.endpoint + "/signin", data).then(res => res.data);
   }
