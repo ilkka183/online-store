@@ -2,8 +2,8 @@ import { Entity, EntityId } from "../services/apiClient";
 import Controller from "./controller";
 
 export default class Table<T extends Entity> {
-  private name: string;
-  private defaultData: T[];
+  private readonly name: string;
+  private readonly defaultData: T[];
   public data: T[];
 
   constructor(controller: Controller<T>) {

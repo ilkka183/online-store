@@ -2,8 +2,8 @@ import { Entity, EntityId } from "../services/apiClient";
 import Table from "./table";
 
 export default abstract class Controller<T extends Entity> {
-  public name: string;
-  public defaultData: T[];
+  public readonly name: string;
+  public readonly defaultData: T[];
 
   constructor(name: string, defaultData: T[]) {
     this.name = name;

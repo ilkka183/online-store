@@ -28,7 +28,7 @@ class ProductAPI extends APIClient<Product> {
     if (query.categoryId)
       endpoint += "/category/" + query.categoryId;
 
-    return this.getAllAt(endpoint);
+    return this.client.get<Product[]>(endpoint).then(res => res.data);
   }
   
 }

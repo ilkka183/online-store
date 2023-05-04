@@ -22,7 +22,7 @@ const axiosClient = axios.create({
 });
 
 export default class APIClient<T extends Entity> {
-  protected endpoint: string;
+  protected readonly endpoint: string;
  
   constructor(endpoint: string) {
     this.endpoint = endpoint;
@@ -32,24 +32,12 @@ export default class APIClient<T extends Entity> {
     return axiosClient;
   }
 
-
-  // Custom
-  public getAllAt = (endpoint: string) => {
-    return this.client.get<T[]>(endpoint).then(res => res.data);
-  }
- 
-  public getAt = (endpoint: string, id: EntityId) => {
-    return this.client.get<T>(endpoint + "/" + id).then(res => res.data);
-  }
- 
-
-  // Default
   public getAll = () => {
-    return this.getAllAt(this.endpoint);
+    return this.client.get<T[]>(this.endpoint).then(res => res.data);
   }
  
   public get = (id: EntityId) => {
-    return this.getAt(this.endpoint, id);
+    return this.client.get<T>(this.endpoint + "/" + id).then(res => res.data);
   }
  
   public post = (data: T) => {
