@@ -1,17 +1,17 @@
 import { Response } from 'miragejs';
 import Controller from "../controller";
 import Table from "../table";
-import { User, SignInData, SignUpData } from "../../services/userService";
-import defaultData from "../data/userData";
+import { Client, SignInData, SignUpData } from "../../services/clientService";
+import defaultData from "../data/clientData";
 
-export default class UserController extends Controller<User> {
+export default class ClientController extends Controller<Client> {
 
   constructor() {
-    super("user", defaultData);
+    super("client", defaultData);
   }
 
-  private toDTO(user: User): Partial<User> {
-    return { ...user, password: undefined }
+  private toDTO(client: Client): Partial<Client> {
+    return { ...client, password: undefined }
   }
 
   public signIn(sign: SignInData): Response {
@@ -39,7 +39,7 @@ export default class UserController extends Controller<User> {
       lastName: sign.lastName,
       email: sign.email,
       password: sign.password1
-    } as User);
+    } as Client);
 
     return new Response(201, {}, this.toDTO(newEntity));
   }

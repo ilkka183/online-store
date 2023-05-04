@@ -14,10 +14,10 @@ import useCart from "../../hooks/cart/useCart";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
 export default function CartView() {
-  const userId = 1;
+  const clientId = 1;
 
-  const { cart } = useCart(userId);
-  const { replaceItem } = useReplaceCart(userId);
+  const { cart } = useCart(clientId);
+  const { replaceItem } = useReplaceCart(clientId);
 
   const total =
     cart.items.reduce((sum, item) => sum + item.quantity * item.price, 0) || 0;

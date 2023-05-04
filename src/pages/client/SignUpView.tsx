@@ -17,7 +17,7 @@ import {
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
-import userApi, { SignUpData } from "../../services/userService";
+import clientApi, { SignUpData } from "../../services/clientService";
 import useForm from "../../hooks/useForm";
 
 export default function SignUpView() {
@@ -35,11 +35,11 @@ export default function SignUpView() {
     console.log(data);
 
     try {
-      const user = await userApi.signUp(data);
+      const client = await clientApi.signUp(data);
 
-      console.log(user);
+      console.log(client);
 
-      if (user != null) {
+      if (client != null) {
         //      setError({ ...error, email: "Email already exists" });
         return;
       }

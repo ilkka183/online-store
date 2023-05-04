@@ -13,7 +13,7 @@ export interface SignUpData {
   password2: string;
 }
 
-export interface User extends Entity {
+export interface Client extends Entity {
   id: number;
   firstName: string;
   lastName: string;
@@ -21,20 +21,20 @@ export interface User extends Entity {
   password: string;
 }
 
-class UserAPI extends APIClient<User> {
+class ClientAPI extends APIClient<Client> {
 
   public getByEmail = (email: string) => {
-    return this.client.get<User>(this.endpoint + "/signin/" + email).then(res => res.data);
+    return this.client.get<Client>(this.endpoint + "/signin/" + email).then(res => res.data);
   }
 
   public signIn = (data: SignInData) => {
-    return this.client.post<Partial<User>>(this.endpoint + "/signin", data).then(res => res.data);
+    return this.client.post<Partial<Client>>(this.endpoint + "/signin", data).then(res => res.data);
   }
 
   public signUp = (data: SignUpData) => {
-    return this.client.post<User>(this.endpoint + "/signup", data).then(res => res.data);
+    return this.client.post<Partial<Client>>(this.endpoint + "/signup", data).then(res => res.data);
   }
 
 }
 
-export default new UserAPI("/users");
+export default new ClientAPI("/clients");

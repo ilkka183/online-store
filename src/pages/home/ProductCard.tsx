@@ -19,10 +19,10 @@ interface Props {
 }
 
 export default function ProductCard({ product, isSkeleton = false }: Props) {
-  const userId = 1;
+  const clientId = 1;
 
-  const { cart } = useCart(userId);
-  const { replaceItem } = useReplaceCart(userId);
+  const { cart } = useCart(clientId);
+  const { replaceItem } = useReplaceCart(clientId);
 
   const handleAddToCart = () => {
     if (cart.items.find((item) => item.name == product.title)) {

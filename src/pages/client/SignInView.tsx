@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
-import userApi, { SignInData } from "../../services/userService";
+import clientApi, { SignInData } from "../../services/clientService";
 import useForm from "../../hooks/useForm";
 
 export default function SignInView() {
@@ -32,9 +32,9 @@ export default function SignInView() {
     console.log(data);
 
     try {
-      const user = await userApi.signIn(data);
+      const client = await clientApi.signIn(data);
 
-      console.log(user);
+      console.log(client);
 
       navigate("/home");
     } catch (error: any) {

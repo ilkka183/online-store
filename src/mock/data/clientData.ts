@@ -1,6 +1,6 @@
-import { User } from "../../services/userService";
+import { Client } from "../../services/clientService";
 
-const data: User[] = [
+const data: Client[] = [
   {
     id: 1,
     firstName: "John",

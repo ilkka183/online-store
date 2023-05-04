@@ -1,14 +1,14 @@
 import { createServer } from "miragejs";
 
 import CartController from "./controllers/cartController";
+import ClientController from "./controllers/clientController";
 import CategoryController from "./controllers/categoryController";
 import ProductController from "./controllers/productController";
-import UserController from "./controllers/userController";
 
 const cart = new CartController();
+const client = new ClientController();
 const category = new CategoryController();
 const product = new ProductController();
-const user = new UserController();
 
 export default function createMockServer() {
   const server = createServer({
@@ -20,19 +20,19 @@ export default function createMockServer() {
       this.get("/carts/:id", (schema, request) => cart.getCart(request.params.id));
       this.put("/carts/:id", (schema, request) => cart.setCart(request.params.id, JSON.parse(request.requestBody)));
 
+      // Clients
+      this.get("/clients", () => client.getAll());
+      this.get("/clients/:id", (schema, request) => client.get(request.params.id));
+      this.put("/clients/:id", (schema, request) => client.replace(request.params.id, JSON.parse(request.requestBody)));
+      this.post("/auth/signin", (schema, request) => client.signIn(JSON.parse(request.requestBody)));
+      this.post("/auth/signup", (schema, request) => client.signUp(JSON.parse(request.requestBody)));
+
       // Categories
       this.get("/categories", () => category.getAll());
 
       // Products
       this.get("/products", () => product.getAll());
       this.get("/products/category/:id", (schema, request) => product.getAll().filter(item => item.categoryId.toString() === request.params.id));
-
-      // Users
-      this.get("/users", () => user.getAll());
-      this.get("/users/:id", (schema, request) => user.get(request.params.id));
-      this.put("/users/:id", (schema, request) => user.replace(request.params.id, JSON.parse(request.requestBody)));
-      this.post("/users/signin", (schema, request) => user.signIn(JSON.parse(request.requestBody)));
-      this.post("/users/signup", (schema, request) => user.signUp(JSON.parse(request.requestBody)));
     },
   });
 
