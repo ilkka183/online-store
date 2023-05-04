@@ -30,8 +30,9 @@ export default function createMockServer() {
       // Users
       this.get("/users", () => user.getAll());
       this.get("/users/:id", (schema, request) => user.get(request.params.id));
-      this.put("/users/:id", (schema, request) => user.put(request.params.id, JSON.parse(request.requestBody)));
-      this.get("/users/signin/:email", (schema, request) => user.getByEmail(request.params.email));
+      this.put("/users/:id", (schema, request) => user.replace(request.params.id, JSON.parse(request.requestBody)));
+      this.post("/users/signin", (schema, request) => user.signIn(JSON.parse(request.requestBody)));
+      this.post("/users/signup", (schema, request) => user.signUp(JSON.parse(request.requestBody)));
     },
   });
 

@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -16,32 +17,37 @@ import {
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
-import userApi from "../../services/userService";
-import useFields from "../../hooks/useFields";
+import userApi, { SignUpData } from "../../services/userService";
+import useForm from "../../hooks/useForm";
 
-export default function CreateAccountView() {
+export default function SignUpView() {
   const navigate = useNavigate();
 
-  const { properties, getData, errors } = useFields([
-    { name: "firstName", type: "string", required: true },
-    { name: "lastName", type: "string", required: true },
-    { name: "email", type: "string", required: true, minLength: 5 },
-    { name: "password1", type: "string", required: true, minLength: 5 },
-    { name: "password2", type: "string", required: true, minLength: 5 },
+  const { properties, handleSubmit, errors } = useForm<SignUpData>([
+    { name: "firstName", required: true },
+    { name: "lastName", required: true },
+    { name: "email", required: true, minLength: 5 },
+    { name: "password1", required: true, minLength: 5 },
+    { name: "password2", required: true, minLength: 5 },
   ]);
 
-  const handleSignUp = async () => {
-    const data = getData();
+  const onSubmit = async (data: SignUpData) => {
     console.log(data);
 
-    const user = await userApi.getByEmail(data.email);
+    try {
+      const user = await userApi.signUp(data);
 
-    if (user != null) {
-      //      setError({ ...error, email: "Email already exists" });
-      return;
+      console.log(user);
+
+      if (user != null) {
+        //      setError({ ...error, email: "Email already exists" });
+        return;
+      }
+
+      //    navigate("/home");
+    } catch (error: any) {
+      console.log(error.message);
     }
-
-    navigate("/home");
   };
 
   return (
@@ -119,7 +125,7 @@ export default function CreateAccountView() {
                 loadingText="Submitting"
                 size="lg"
                 colorScheme="blue"
-                onClick={handleSignUp}
+                onClick={() => handleSubmit(onSubmit)}
               >
                 Create account
               </Button>

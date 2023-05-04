@@ -1,27 +1,25 @@
-import Controller from "../controller";
+import Controller, { Table } from "../controller";
 import { Cart } from "../../services/cartService";
 import { EntityId } from "../../services/apiClient";
-import data from "../data/cartData";
+import defaultData from "../data/cartData";
 
 export default class CartController extends Controller<Cart> {
 
   constructor() {
-    super("carts", data);
+    super("carts", defaultData);
   }
 
   public getCart(id: EntityId): Cart | null {
-    const data = this.getData();
+    const table = new Table(this);
 
-    return this.find(data, id);
+    return table.find(id);
   }
 
   public setCart(id: EntityId, entity: Cart): Cart | null {
-    const data = this.getData();
+    const table = new Table(this);
+    table.replace(id, entity);
 
-    const newData = data.map(item => item.id == id ? entity : item);
-    this.setData(newData);
-
-    return this.find(data, id);
+    return table.find(id);
   }
 
 }

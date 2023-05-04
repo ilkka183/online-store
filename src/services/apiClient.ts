@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export type EntityId = string | number;
 
@@ -28,6 +28,11 @@ export default class APIClient<T extends Entity> {
     this.endpoint = endpoint;
   }
 
+
+  protected client() {
+    return axiosClient;
+  }
+
   protected getAllAt = (endpoint: string) => {
     return axiosClient.get<T[]>(endpoint).then(res => res.data);
   }
@@ -35,6 +40,7 @@ export default class APIClient<T extends Entity> {
   public getAt = (endpoint: string) => {
     return axiosClient.get<T>(endpoint).then(res => res.data);
   }
+
 
   public getAll = () => {
     return axiosClient.get<T[]>(this.endpoint).then(res => res.data);

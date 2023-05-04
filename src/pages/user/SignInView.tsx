@@ -17,32 +17,29 @@ import {
 } from "@chakra-ui/react";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
-import userApi from "../../services/userService";
-import useFields from "../../hooks/useFields";
-
-interface Data {
-  email: string;
-  password: string;
-}
+import userApi, { SignInData } from "../../services/userService";
+import useForm from "../../hooks/useForm";
 
 export default function SignInView() {
   const navigate = useNavigate();
 
-  const { properties, handleSubmit, errors } = useFields<Data>([
-    { name: "email", type: "string", required: true, minLength: 5 },
-    { name: "password", type: "string", required: true, minLength: 5 },
+  const { properties, handleSubmit, errors } = useForm<SignInData>([
+    { name: "email", required: true, minLength: 5 },
+    { name: "password", required: true, minLength: 5 },
   ]);
 
-  const onSubmit = async (data: Data) => {
+  const onSubmit = async (data: SignInData) => {
     console.log(data);
 
-    const user = await userApi.getByEmail(data.email);
+    try {
+      const user = await userApi.signIn(data);
 
-    if (user == null || user.password !== data.password) {
-      return;
+      console.log(user);
+
+      navigate("/home");
+    } catch (error: any) {
+      console.log(error.message);
     }
-
-    navigate("/home");
   };
 
   return (

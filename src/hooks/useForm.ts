@@ -2,14 +2,13 @@ import { useState } from "react";
 
 interface Field {
   name: string;
-  type: "string" | "number";
   value?: string;
   required?: boolean;
   minLength?: number;
   maxLength?: number;
 } 
 
-export default function useFields<T>(fields: Field[]) {
+export default function useForm<T>(fields: Field[]) {
 
   const [validated, setValidated] = useState(false);
 
