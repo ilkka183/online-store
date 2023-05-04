@@ -28,41 +28,43 @@ export default class APIClient<T extends Entity> {
     this.endpoint = endpoint;
   }
 
-
-  protected client() {
+  protected get client() {
     return axiosClient;
   }
 
-  protected getAllAt = (endpoint: string) => {
-    return axiosClient.get<T[]>(endpoint).then(res => res.data);
+
+  // Custom
+  public getAllAt = (endpoint: string) => {
+    return this.client.get<T[]>(endpoint).then(res => res.data);
   }
  
-  public getAt = (endpoint: string) => {
-    return axiosClient.get<T>(endpoint).then(res => res.data);
+  public getAt = (endpoint: string, id: EntityId) => {
+    return this.client.get<T>(endpoint + "/" + id).then(res => res.data);
   }
+ 
 
-
+  // Default
   public getAll = () => {
-    return axiosClient.get<T[]>(this.endpoint).then(res => res.data);
+    return this.getAllAt(this.endpoint);
   }
  
   public get = (id: EntityId) => {
-    return axiosClient.get<T>(this.endpoint + "/" + id).then(res => res.data);
+    return this.getAt(this.endpoint, id);
   }
  
   public post = (data: T) => {
-    return axiosClient.post<T>(this.endpoint, data).then(res => res.data);
+    return this.client.post<T>(this.endpoint, data).then(res => res.data);
   }
  
   public put = (data: ReplaceEntity<T>) => {
-    return axiosClient.put<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
+    return this.client.put<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
   }
  
   public patch = (data: UpdateEntity<T>) => {
-    return axiosClient.patch<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
+    return this.client.patch<T>(this.endpoint + "/" + data.id, data.data).then(res => res.data);
   }
  
   public delete = (id: EntityId) => {
-    return axiosClient.delete<T>(this.endpoint + "/" + id).then(res => res.data);
+    return this.client.delete<T>(this.endpoint + "/" + id).then(res => res.data);
   }
 }

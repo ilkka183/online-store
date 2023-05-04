@@ -1,4 +1,5 @@
-import Controller, { Table } from "../controller";
+import Controller from "../controller";
+import Table from "../table";
 import { Cart } from "../../services/cartService";
 import { EntityId } from "../../services/apiClient";
 import defaultData from "../data/cartData";
@@ -6,7 +7,7 @@ import defaultData from "../data/cartData";
 export default class CartController extends Controller<Cart> {
 
   constructor() {
-    super("carts", defaultData);
+    super("cart", defaultData);
   }
 
   public getCart(id: EntityId): Cart | null {

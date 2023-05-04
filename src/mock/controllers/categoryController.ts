@@ -5,7 +5,7 @@ import data from "../data/categoryData";
 export default class CategoryController extends Controller<Category> {
 
   constructor() {
-    super("categories", data);
+    super("category", data);
   }
 
 }

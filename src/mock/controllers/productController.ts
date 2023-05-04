@@ -5,7 +5,7 @@ import data from "../data/productData";
 export default class ProductController extends Controller<Product> {
 
   constructor() {
-    super("products", data);
+    super("product", data);
   }
 
 }

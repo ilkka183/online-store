@@ -1,15 +1,16 @@
 import { Response } from 'miragejs';
-import Controller, { Table } from "../controller";
+import Controller from "../controller";
+import Table from "../table";
 import { User, SignInData, SignUpData } from "../../services/userService";
 import defaultData from "../data/userData";
 
 export default class UserController extends Controller<User> {
 
   constructor() {
-    super("users", defaultData);
+    super("user", defaultData);
   }
 
-  private removePassword(user: User): Partial<User> {
+  private toDTO(user: User): Partial<User> {
     return { ...user, password: undefined }
   }
 
@@ -21,7 +22,7 @@ export default class UserController extends Controller<User> {
     if (entity == null)
       return new Response(401, {}, { error: "Invalid email or password" });
 
-    return new Response(200, {}, this.removePassword(entity));
+    return new Response(200, {}, this.toDTO(entity));
   }
 
   public signUp(sign: SignUpData): Response {
@@ -40,7 +41,7 @@ export default class UserController extends Controller<User> {
       password: sign.password1
     } as User);
 
-    return new Response(201, {}, this.removePassword(newEntity));
+    return new Response(201, {}, this.toDTO(newEntity));
   }
 
 }
