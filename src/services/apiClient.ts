@@ -33,6 +33,8 @@ export default class APIClient<T extends Entity> {
   }
 
   public getAllAt = (endpoint: string) => {
+    endpoint = encodeURI(endpoint)
+    
     return this.client.get<T[]>(endpoint).then(res => res.data);
   }
   

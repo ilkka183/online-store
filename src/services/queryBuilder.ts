@@ -1,6 +1,6 @@
-export default class UrlBuilder {
+export default class QueryBuilder {
   private index: number = 0;
-  public text: string;
+  private text: string;
 
   constructor(endpoint: string) {
     this.text = endpoint;
@@ -15,6 +15,10 @@ export default class UrlBuilder {
 
   public addNumber(key: string, value: number) {
     this.addString(key, value.toString());
+  }
+
+  public get url() {
+    return this.text;
   }
 
 }
