@@ -6,15 +6,15 @@ export default class UrlBuilder {
     this.text = endpoint;
   }
 
-  public addString(name: string, value: string) {
+  public addString(key: string, value: string) {
     this.text += (this.index === 0) ? "?" : "&";
-    this.text += name + "=" + value;
+    this.text += key + "=" + value;
 
     this.index++;
   }
 
-  public addNumber(name: string, value: number) {
-    this.addString(name, value.toString());
+  public addNumber(key: string, value: number) {
+    this.addString(key, value.toString());
   }
 
 }
