@@ -17,7 +17,7 @@ export default function ProductGrid({ productQuery }: Props) {
   if (isLoading) {
     for (let id: number = 1; id <= 4; id++)
       products.push({ ...({} as Product), id: id.toString() });
-  } else products = [...data];
+  } else products = [...data.data];
 
   return (
     <SimpleGrid

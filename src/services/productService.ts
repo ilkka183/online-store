@@ -1,4 +1,4 @@
-import APIClient, { Entity } from "./apiClient";
+import APIClient, { Entity, Entities } from "./apiClient";
 import QueryBuilder from "./queryBuilder";
 
 export interface Rating {
@@ -40,7 +40,7 @@ class ProductAPI extends APIClient<Product> {
     if (query.searchText)
       builder.addString("searchText", query.searchText);
 
-    return this.getAllAt(builder.url);
+    return this.client.get<Entities<Product>>(builder.encodedUrl).then(res => res.data);
   }
   
 }

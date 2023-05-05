@@ -1,6 +1,7 @@
 import Controller from "../controller";
 import Table from "../table";
 import { Product } from "../../services/productService";
+import { Entities } from "../../services/apiClient";
 import data from "../data/productData";
 
 export default class ProductController extends Controller<Product> {
@@ -9,13 +10,16 @@ export default class ProductController extends Controller<Product> {
     super("product", data);
   }
 
-  public getProducts(query: Record<string, string>): Product[] {
+  public getProducts(query: Record<string, string>): Entities<Product> {
     const table = new Table(this);
 
-    if (query.categoryId)
-      return table.data.filter(item => item.categoryId.toString() === query.categoryId);
+    let data = table.data;
 
-    return table.data;
+    if (query.categoryId) {
+      data = data.filter(item => item.categoryId.toString() === query.categoryId);
+    }
+
+    return { count: data.length, data }
   }
 
 }

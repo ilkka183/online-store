@@ -23,7 +23,7 @@ export default function CategoryList({
 
   if (isLoading) return <Spinner />;
 
-  const categories = [{ id: undefined, name: "" }, ...data];
+  const categories = [{ id: undefined, name: "" }, ...data.data];
 
   return (
     <>

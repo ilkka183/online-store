@@ -1,9 +1,14 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 export type EntityId = string | number;
 
 export interface Entity {
   id: EntityId;
+}
+
+export interface Entities<T> {
+  count: number;
+  data: T[];
 }
 
 export interface ReplaceEntity<T extends Entity> {
@@ -32,14 +37,8 @@ export default class APIClient<T extends Entity> {
     return axiosClient;
   }
 
-  public getAllAt = (endpoint: string) => {
-    endpoint = encodeURI(endpoint)
-    
-    return this.client.get<T[]>(endpoint).then(res => res.data);
-  }
-  
   public getAll = () => {
-    return this.client.get<T[]>(this.endpoint).then(res => res.data);
+    return this.client.get<Entities<T>>(this.endpoint).then(res => res.data);
   }
  
   public get = (id: EntityId) => {

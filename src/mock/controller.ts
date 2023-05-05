@@ -1,4 +1,4 @@
-import { Entity, EntityId } from "../services/apiClient";
+import { Entity, EntityId, Entities } from "../services/apiClient";
 import Table from "./table";
 
 export default abstract class Controller<T extends Entity> {
@@ -10,10 +10,10 @@ export default abstract class Controller<T extends Entity> {
     this.defaultData = defaultData;
   }
 
-  public getAll(): T[] {
+  public getAll(): Entities<T> {
     const table = new Table(this);
 
-    return table.data;
+    return { count: table.data.length, data: table.data }
   }
 
   public get(id: EntityId): T | null {

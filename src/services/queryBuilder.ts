@@ -21,4 +21,8 @@ export default class QueryBuilder {
     return this.text;
   }
 
+  public get encodedUrl() {
+    return encodeURI(this.text);
+  }
+
 }
