@@ -1,4 +1,5 @@
 import APIClient, { Entity } from "./apiClient";
+import UrlBuilder from "./urlBuilder";
 
 export interface ProductQuery {
   categoryId?: number;
@@ -23,12 +24,12 @@ export interface Product extends Entity {
 class ProductAPI extends APIClient<Product> {
 
   getProducts = (query: ProductQuery) => {
-    let endpoint = this.endpoint;
+    const url = new UrlBuilder(this.endpoint);
 
     if (query.categoryId)
-      endpoint += "/category/" + query.categoryId;
+      url.addNumber("categoryId", query.categoryId);
 
-    return this.client.get<Product[]>(endpoint).then(res => res.data);
+    return this.getAllAt(url.text);
   }
   
 }

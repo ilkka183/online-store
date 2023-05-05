@@ -32,6 +32,10 @@ export default class APIClient<T extends Entity> {
     return axiosClient;
   }
 
+  public getAllAt = (endpoint: string) => {
+    return this.client.get<T[]>(endpoint).then(res => res.data);
+  }
+ 
   public getAll = () => {
     return this.client.get<T[]>(this.endpoint).then(res => res.data);
   }
