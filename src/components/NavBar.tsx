@@ -1,15 +1,17 @@
-import { Button, HStack, Image, Link } from "@chakra-ui/react";
+import { Button, HStack, Image, Link, Text } from "@chakra-ui/react";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.webp";
 import SearchInput from "./SearchInput";
 import ColorModeSwitch from "./ColorModeSwitch";
 import { CgShoppingCart } from "react-icons/cg";
+import { Cart } from "../api/cartApi";
 
 interface Props {
+  cart: Cart;
   onSearch: (searchText: string) => void;
 }
 
-export default function NavBar({ onSearch }: Props) {
+export default function NavBar({ cart, onSearch }: Props) {
   const navigate = useNavigate();
 
   return (
@@ -22,9 +24,11 @@ export default function NavBar({ onSearch }: Props) {
           Create account
         </Link>
         <Button onClick={() => navigate("/signin")}>Sign in</Button>
-        <CgShoppingCart />
         <Link as={RouterLink} to="/cart">
-          Cart
+          <HStack>
+            <CgShoppingCart size="24px" />
+            <Text>{`(${cart.items.length})`}</Text>
+          </HStack>
         </Link>
       </HStack>
     </>

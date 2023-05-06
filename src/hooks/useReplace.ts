@@ -1,5 +1,5 @@
 import { MutationFunction, QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Entity, EntityId, ReplaceEntity } from "../services/apiClient";
+import { Entity, EntityId, ReplaceEntity } from "../api/apiClient";
 
 interface ReplaceContext<T> {
   previousData: T[]

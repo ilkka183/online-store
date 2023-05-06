@@ -1,4 +1,4 @@
-import { Product } from "../../services/productService";
+import { Product } from "../../api/productApi";
 
 const data: Product[] = [
   {

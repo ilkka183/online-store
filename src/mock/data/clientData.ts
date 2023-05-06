@@ -1,4 +1,4 @@
-import { Client } from "../../services/clientService";
+import { Client } from "../../api/clientApi";
 
 const data: Client[] = [
   {

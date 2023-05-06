@@ -2,7 +2,7 @@ import { CloseButton, Flex, Link } from "@chakra-ui/react";
 import PriceTag from "./PriceTag";
 import ProductMeta from "./ProductMeta";
 import QuantitySelect from "./QuantitySelect";
-import { CartItem } from "../../services/cartService";
+import { CartItem } from "../../api/cartApi";
 
 interface Props {
   item: CartItem;

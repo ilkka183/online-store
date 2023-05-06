@@ -9,14 +9,16 @@ import {
 } from "@chakra-ui/react";
 import CartElement from "./CartElement";
 import OrderSummary from "./OrderSummary";
-import { CartItem } from "../../services/cartService";
-import useCart from "../../hooks/cart/useCart";
+import { Cart, CartItem } from "../../api/cartApi";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
-export default function CartView() {
+interface Props {
+  cart: Cart;
+}
+
+export default function CartPage({ cart }: Props) {
   const clientId = 1;
 
-  const { cart } = useCart(clientId);
   const { replaceItem } = useReplaceCart(clientId);
 
   const total =
@@ -56,7 +58,7 @@ export default function CartView() {
           <Heading fontSize="2xl" fontWeight="extrabold">
             Shopping Cart{" "}
             {cart.items.length > 0
-              ? "(" + cart.items.length + "items)"
+              ? "(" + cart.items.length + " items)"
               : " is empty"}
           </Heading>
 

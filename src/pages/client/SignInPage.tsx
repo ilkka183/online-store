@@ -17,10 +17,10 @@ import {
 } from "@chakra-ui/react";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
-import clientApi, { SignInData } from "../../services/clientService";
+import clientApi, { SignInData } from "../../api/clientApi";
 import useForm from "../../hooks/useForm";
 
-export default function SignInView() {
+export default function SignInPage() {
   const navigate = useNavigate();
 
   const { properties, handleSubmit, errors } = useForm<SignInData>([

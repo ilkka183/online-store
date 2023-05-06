@@ -1,7 +1,7 @@
 import { Response } from 'miragejs';
 import Controller from "../controller";
 import Table from "../table";
-import { Client, SignInData, SignUpData } from "../../services/clientService";
+import { Client, SignInData, SignUpData } from "../../api/clientApi";
 import defaultData from "../data/clientData";
 
 export default class ClientController extends Controller<Client> {

@@ -1,7 +1,7 @@
 import Controller from "../controller";
 import Table from "../table";
-import { Cart } from "../../services/cartService";
-import { EntityId } from "../../services/apiClient";
+import { Cart } from "../../api/cartApi";
+import { EntityId } from "../../api/apiClient";
 import defaultData from "../data/cartData";
 
 export default class CartController extends Controller<Cart> {

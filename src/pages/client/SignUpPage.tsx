@@ -17,7 +17,7 @@ import {
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
-import clientApi, { SignUpData } from "../../services/clientService";
+import clientApi, { SignUpData } from "../../api/clientApi";
 import useForm from "../../hooks/useForm";
 
 export default function SignUpView() {

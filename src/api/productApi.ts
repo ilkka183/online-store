@@ -25,7 +25,7 @@ export interface ProductQuery {
 
 class ProductAPI extends APIClient<Product> {
 
-  getProducts = (query: ProductQuery) => {
+  fetchProducts = (query: ProductQuery) => {
     const builder = new QueryBuilder(this.endpoint);
 
     if (query.categoryId)
@@ -38,7 +38,7 @@ class ProductAPI extends APIClient<Product> {
       builder.addNumber("maxPrice", query.maxPrice);
 
     if (query.searchText)
-      builder.addString("searchText", query.searchText);
+      builder.addString("title", query.searchText);
 
     return this.client.get<Entities<Product>>(builder.encodedUrl).then(res => res.data);
   }

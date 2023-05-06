@@ -1,5 +1,5 @@
 import useGetAll from "../useGetAll";
-import api, { Client } from "../../services/clientService";
+import api, { Client } from "../../api/clientApi";
 import { KEY_CLIENTS } from "../queryKey";
 
 export default function useClients() {

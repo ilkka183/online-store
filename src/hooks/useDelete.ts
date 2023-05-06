@@ -1,5 +1,5 @@
 import { MutationFunction, QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Entity, EntityId } from "../services/apiClient";
+import { Entity, EntityId } from "../api/apiClient";
 
 interface DeleteContext<T> {
   previousData: T[]

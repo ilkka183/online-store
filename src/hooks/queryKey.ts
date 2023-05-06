@@ -1,5 +1,5 @@
 import { QueryKey } from "@tanstack/react-query";
-import { ProductQuery } from "../services/productService";
+import { ProductQuery } from "../api/productApi";
 
 export const KEY_CATEGORIES = (): QueryKey => ["categories"];
 export const KEY_CART = (clientId: number): QueryKey => ["cart", clientId];

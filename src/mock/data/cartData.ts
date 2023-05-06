@@ -1,4 +1,4 @@
-import { Cart } from "../../services/cartService";
+import { Cart } from "../../api/cartApi";
 
 const data: Cart[] = [
   {

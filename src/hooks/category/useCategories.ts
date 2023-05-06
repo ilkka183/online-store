@@ -1,5 +1,5 @@
 import useGetAll from "../useGetAll";
-import api, { Category } from "../../services/categoryService";
+import api, { Category } from "../../api/categoryApi";
 import { KEY_CATEGORIES } from "../queryKey";
 
 export default function useCategories() {

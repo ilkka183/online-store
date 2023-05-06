@@ -8,20 +8,23 @@ import {
   SkeletonText,
   Text,
 } from "@chakra-ui/react";
-import { Cart, CartItem } from "../../services/cartService";
-import { Product } from "../../services/productService";
-import useCart from "../../hooks/cart/useCart";
+import { Cart, CartItem } from "../../api/cartApi";
+import { Product } from "../../api/productApi";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 
 interface Props {
+  cart: Cart;
   product: Product;
   isSkeleton?: boolean;
 }
 
-export default function ProductCard({ product, isSkeleton = false }: Props) {
+export default function ProductCard({
+  cart,
+  product,
+  isSkeleton = false,
+}: Props) {
   const clientId = 1;
 
-  const { cart } = useCart(clientId);
   const { replaceItem } = useReplaceCart(clientId);
 
   const handleAddToCart = () => {

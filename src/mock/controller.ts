@@ -1,4 +1,4 @@
-import { Entity, EntityId, Entities } from "../services/apiClient";
+import { Entity, EntityId, Entities } from "../api/apiClient";
 import Table from "./table";
 
 export default abstract class Controller<T extends Entity> {
