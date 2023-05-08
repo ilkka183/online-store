@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import CartView from "./pages/cart/CartPage";
+import AccountInformationPage from "./pages/account/AccountInformationPage";
+import OrdersPage from "./pages/account/OrdersPage";
+import MessagesPage from "./pages/account/MessagesPage";
+import AddressBookPage from "./pages/account/AddressBookPage";
+import AddressPage from "./pages/account/AddressPage";
+import PaymentMethodsPage from "./pages/account/PaymentMethodsPage";
+import CartPage from "./pages/cart/CartPage";
 import SignUpPage from "./pages/client/SignUpPage";
 import HomePage from "./pages/home/HomePage";
 import SignInPage from "./pages/client/SignInPage";
@@ -39,12 +45,28 @@ function App() {
 
   return (
     <>
-      <NavBar cart={cart} onSearch={handleSearch} />
+      <NavBar cart={cart} productQuery={productQuery} onSearch={handleSearch} />
       <div>
         <Routes>
           <Route path="/" element={renderHomePage()} />
           <Route path="/home" element={renderHomePage()} />
-          <Route path="/cart" element={<CartView cart={cart} />} />
+          <Route path="/account/orders" element={<OrdersPage />} />
+          <Route path="/account/messages" element={<MessagesPage />} />
+          <Route
+            path="/account/information"
+            element={<AccountInformationPage />}
+          />
+          <Route path="/account/addressbook" element={<AddressBookPage />} />
+          <Route path="/account/addressbook/add" element={<AddressPage />} />
+          <Route
+            path="/account/addressbook/edit/:id"
+            element={<AddressPage />}
+          />
+          <Route
+            path="/account/paymentmethods"
+            element={<PaymentMethodsPage />}
+          />
+          <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
         </Routes>
