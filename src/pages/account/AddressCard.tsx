@@ -1,29 +1,57 @@
-import { Button, Card, CardBody, Text } from "@chakra-ui/react";
-import { ClientAddress } from "../../api/clientAddressApi";
+import {
+  Button,
+  Card,
+  CardBody,
+  Flex,
+  HStack,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
+import { Address } from "../../api/addressApi";
 import { Link } from "react-router-dom";
 
 interface Props {
-  address: ClientAddress;
+  address: Address;
   onRemove: (id: number) => void;
+  onSetAsDefault: (id: number) => void;
 }
 
-export default function AddressCard({ address, onRemove }: Props) {
+export default function AddressCard({
+  address,
+  onRemove,
+  onSetAsDefault,
+}: Props) {
   return (
-    <Card>
+    <Card borderWidth={address.isDefault ? 1 : 0} minWidth="300px">
       <CardBody>
-        <Text>{address.fullName}</Text>
+        <Flex>
+          <Text fontWeight="bold">{address.fullName}</Text>
+          <Spacer />
+          {address.isDefault && (
+            <Text color="green" fontWeight="bold">
+              Default
+            </Text>
+          )}
+        </Flex>
         <Text>{address.addressLine1}</Text>
         <Text>{address.addressLine2}</Text>
         <Text>{address.postalCode}</Text>
         <Text>{address.city}</Text>
         <Text>{address.country}</Text>
         <Text>{address.phoneNumber}</Text>
-        <Button as={Link} to={"/account/addressbook/edit/" + address.id}>
-          Edit
-        </Button>
-        <Button ml={2} onClick={() => onRemove(address.id)}>
-          Remove
-        </Button>
+        <HStack mt={2}>
+          <Button as={Link} to={"/account/address-book/edit/" + address.id}>
+            Edit
+          </Button>
+          <Button ml={2} onClick={() => onRemove(address.id)}>
+            Remove
+          </Button>
+          {!address.isDefault && (
+            <Button ml={2} onClick={() => onSetAsDefault(address.id)}>
+              Set as default
+            </Button>
+          )}
+        </HStack>
       </CardBody>
     </Card>
   );

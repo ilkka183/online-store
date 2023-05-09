@@ -1,5 +1,10 @@
-import { Button } from "@chakra-ui/react";
+import { Box, Button, HStack } from "@chakra-ui/react";
+import FormHeading from "../../components/FormHeading";
 
 export default function AccountInformationPage() {
-  return <div>Account Information</div>;
+  return (
+    <Box paddingX={5}>
+      <FormHeading>Account Information</FormHeading>
+    </Box>
+  );
 }

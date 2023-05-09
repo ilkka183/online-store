@@ -1,6 +1,6 @@
-import { ClientAddress } from "../../api/clientAddressApi";
+import { Address } from "../../api/addressApi";
 
-const data: ClientAddress[] = [
+const data: Address[] = [
   {
     id: 1,
     clientId: 1,
@@ -10,7 +10,8 @@ const data: ClientAddress[] = [
     city: "Seattle",
     postalCode: "98101",
     country: "USA",
-    phoneNumber: "555 1234"
+    phoneNumber: "555 1234",
+    isDefault: true
   },
   {
     id: 2,
@@ -21,7 +22,8 @@ const data: ClientAddress[] = [
     city: "Denver",
     postalCode: "80014",
     country: "USA",
-    phoneNumber: "555 1234"
+    phoneNumber: "555 1234",
+    isDefault: false
   },
   {
     id: 3,
@@ -32,7 +34,8 @@ const data: ClientAddress[] = [
     city: "Chicago",
     postalCode: "60007",
     country: "USA",
-    phoneNumber: "555 1234"
+    phoneNumber: "555 1234",
+    isDefault: false
   }
 ];
 

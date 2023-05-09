@@ -59,11 +59,10 @@ export default function NavBar({ cart, productQuery, onSearch }: Props) {
             </MenuButton>
             <MenuList>
               <MenuItemLink to="/account/orders">Orders</MenuItemLink>
-              <MenuItemLink to="/account/messages">Messages</MenuItemLink>
               <MenuItemLink to="/account/information">
                 Account Information
               </MenuItemLink>
-              <MenuItemLink to="/account/addressbook">
+              <MenuItemLink to="/account/address-book">
                 Address Book
               </MenuItemLink>
               <MenuItemLink to="/account/paymentmethods">

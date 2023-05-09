@@ -1,6 +1,6 @@
 import APIClient, { Entity } from "./apiClient";
 
-export interface ClientAddress extends Entity {
+export interface Address extends Entity {
   id: number;
   clientId: number;
   fullName: string;
@@ -10,9 +10,10 @@ export interface ClientAddress extends Entity {
   postalCode: string;
   country: string;
   phoneNumber: string;
+  isDefault: boolean;
 }
 
-class ClientAddressAPI extends APIClient<ClientAddress> {
+class AddressAPI extends APIClient<Address> {
 }
 
-export default new ClientAddressAPI("/client-addresses");
+export default new AddressAPI("/addresses");

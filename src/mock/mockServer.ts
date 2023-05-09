@@ -2,13 +2,17 @@ import { createServer } from "miragejs";
 
 import CartController from "./controllers/cartController";
 import ClientController from "./controllers/clientController";
-import ClientAddressController from "./controllers/clientAddressController";
+import OrderController from "./controllers/orderController";
+import AddressController from "./controllers/addressController";
+import PaymentMethodController from "./controllers/paymentMethodController";
 import CategoryController from "./controllers/categoryController";
 import ProductController from "./controllers/productController";
 
 const cart = new CartController();
 const client = new ClientController();
-const clientAddress = new ClientAddressController();
+const orders = new OrderController();
+const address = new AddressController();
+const paymentMethod = new PaymentMethodController();
 const category = new CategoryController();
 const product = new ProductController();
 
@@ -29,8 +33,14 @@ export default function createMockServer() {
       this.post("/clients/signin", (schema, request) => client.signIn(JSON.parse(request.requestBody)));
       this.post("/clients/signup", (schema, request) => client.signUp(JSON.parse(request.requestBody)));
 
-      // Clients
-      this.get("/client-addresses/:clientId", (schema, request) => clientAddress.getOf(parseInt(request.params.clientId)));
+      // Orders
+      this.get("/orders/:clientId", (schema, request) => orders.getOf(parseInt(request.params.clientId)));
+
+      // Addresses
+      this.get("/addresses/:clientId", (schema, request) => address.getOf(parseInt(request.params.clientId)));
+
+      // Payment methods
+      this.get("/payment-methods/:clientId", (schema, request) => paymentMethod.getOf(parseInt(request.params.clientId)));
 
       // Categories
       this.get("/categories", (schema, request) => category.getAll());

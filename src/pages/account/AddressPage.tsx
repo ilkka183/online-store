@@ -1,24 +1,16 @@
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  HStack,
-  Input,
-  Stack,
-} from "@chakra-ui/react";
+import { Button, HStack, Stack } from "@chakra-ui/react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import FormInput from "../../components/FormInput";
 import FormHeading from "../../components/FormHeading";
 import LinkButton from "../../components/LinkButton";
-import { ClientAddress } from "../../api/clientAddressApi";
+import { Address } from "../../api/addressApi";
 
 export default function AddressPage() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { properties, handleSubmit, errors } = useForm<ClientAddress>([
+  const { properties, handleSubmit, errors } = useForm<Address>([
     { name: "fullName", required: true },
     { name: "addressLine1", required: true },
     { name: "addressLine2" },
@@ -28,9 +20,9 @@ export default function AddressPage() {
     { name: "phoneNumber", required: true },
   ]);
 
-  const onSubmit = async (data: ClientAddress) => {
+  const onSubmit = async (data: Address) => {
     console.log(data);
-    navigate("/account/addressbook");
+    navigate("/account/address-book");
   };
 
   return (

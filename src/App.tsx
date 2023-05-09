@@ -51,15 +51,14 @@ function App() {
           <Route path="/" element={renderHomePage()} />
           <Route path="/home" element={renderHomePage()} />
           <Route path="/account/orders" element={<OrdersPage />} />
-          <Route path="/account/messages" element={<MessagesPage />} />
           <Route
             path="/account/information"
             element={<AccountInformationPage />}
           />
-          <Route path="/account/addressbook" element={<AddressBookPage />} />
-          <Route path="/account/addressbook/add" element={<AddressPage />} />
+          <Route path="/account/address-book" element={<AddressBookPage />} />
+          <Route path="/account/address-book/add" element={<AddressPage />} />
           <Route
-            path="/account/addressbook/edit/:id"
+            path="/account/address-book/edit/:id"
             element={<AddressPage />}
           />
           <Route

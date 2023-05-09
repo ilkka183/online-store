@@ -1,16 +1,16 @@
 import Controller from "../controller";
 import Table from "../table";
 import { Entities } from "../../api/apiClient";
-import { ClientAddress } from "../../api/clientAddressApi";
-import defaultData from "../data/clientAddressData";
+import { Address } from "../../api/addressApi";
+import defaultData from "../data/addressData";
 
-export default class ClientAddressController extends Controller<ClientAddress> {
+export default class AddressController extends Controller<Address> {
 
   constructor() {
-    super("clientAddress", defaultData);
+    super("address", defaultData);
   }
 
-  public getOf(clientId: number): Entities<ClientAddress> {
+  public getOf(clientId: number): Entities<Address> {
     const table = new Table(this);
 
     const data = table.data.filter(item => item.clientId === clientId);
