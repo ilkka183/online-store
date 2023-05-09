@@ -2,11 +2,13 @@ import { createServer } from "miragejs";
 
 import CartController from "./controllers/cartController";
 import ClientController from "./controllers/clientController";
+import ClientAddressController from "./controllers/clientAddressController";
 import CategoryController from "./controllers/categoryController";
 import ProductController from "./controllers/productController";
 
 const cart = new CartController();
 const client = new ClientController();
+const clientAddress = new ClientAddressController();
 const category = new CategoryController();
 const product = new ProductController();
 
@@ -26,6 +28,9 @@ export default function createMockServer() {
       this.put("/clients/:id", (schema, request) => client.replace(request.params.id, JSON.parse(request.requestBody)));
       this.post("/clients/signin", (schema, request) => client.signIn(JSON.parse(request.requestBody)));
       this.post("/clients/signup", (schema, request) => client.signUp(JSON.parse(request.requestBody)));
+
+      // Clients
+      this.get("/client-addresses/:clientId", (schema, request) => clientAddress.getOf(parseInt(request.params.clientId)));
 
       // Categories
       this.get("/categories", (schema, request) => category.getAll());

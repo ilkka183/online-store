@@ -41,6 +41,10 @@ export default class APIClient<T extends Entity> {
     return this.client.get<T>(this.endpoint + "/" + id).then(res => res.data);
   }
  
+  public fetchAllById = (id: EntityId) => {
+    return this.client.get<Entities<T>>(this.endpoint + "/" + id).then(res => res.data);
+  }
+ 
   public getAll = () => {
     return this.client.get<Entities<T>>(this.endpoint).then(res => res.data);
   }
