@@ -1,4 +1,4 @@
-import { Box, Button, HStack } from "@chakra-ui/react";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import FormHeading from "../../components/FormHeading";
 import useOrders from "../../hooks/client/useOrders";
@@ -11,11 +11,11 @@ export default function OrdersPage() {
   return (
     <Box paddingX={5}>
       <FormHeading>Orders</FormHeading>
-      <HStack mt={4}>
+      <VStack mt={4}>
         {data?.data.map((order) => (
           <OrderCard key={order.id} order={order} />
         ))}
-      </HStack>
+      </VStack>
     </Box>
   );
 }
