@@ -11,7 +11,7 @@ import {
 import { Cart, CartItem } from "../../api/cartApi";
 import { Product } from "../../api/productApi";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
-import LinkImage from "../../components/LinkImage";
+import RouterImage from "../../components/RouterImage";
 
 interface Props {
   cart: Cart;
@@ -77,7 +77,7 @@ export default function ProductCard({
 
   return (
     <Card>
-      <LinkImage src={product.image} to={toProductPage} />
+      <RouterImage src={product.image} to={toProductPage} />
       <CardBody>
         <Heading fontSize="2xl">{product.title}</Heading>
         <Button onClick={handleAddToCart}>Add to cart</Button>

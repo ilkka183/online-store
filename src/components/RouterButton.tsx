@@ -7,7 +7,7 @@ interface Props {
   children: ReactNode;
 }
 
-export default function LinkButton({ to, children }: Props) {
+export default function RouterButton({ to, children }: Props) {
   return (
     <Button as={Link} to={to}>
       {children}

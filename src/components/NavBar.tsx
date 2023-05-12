@@ -12,7 +12,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.webp";
 import SearchInput from "./SearchInput";
 import ColorModeSwitch from "./ColorModeSwitch";
@@ -21,6 +21,7 @@ import { CgShoppingCart } from "react-icons/cg";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Cart } from "../api/cartApi";
 import { ProductQuery } from "../api/productApi";
+import RouterLink from "./RouterLink";
 
 interface Props {
   cart: Cart;
@@ -38,9 +39,7 @@ export default function NavBar({ cart, productQuery, onSearch }: Props) {
       <HStack padding="10px">
         <Image src={logo} boxSize="60px" onClick={() => navigate("/home")} />
         <SearchInput productQuery={productQuery} onSearch={onSearch} />
-        <Link as={RouterLink} to="/signup">
-          Create account
-        </Link>
+        <RouterLink to="/signup">Create account</RouterLink>
         <Button onClick={() => navigate("/signin")}>Sign in</Button>
         <Box>
           <Menu>
@@ -73,12 +72,12 @@ export default function NavBar({ cart, productQuery, onSearch }: Props) {
             </MenuList>
           </Menu>
         </Box>
-        <Link as={RouterLink} to="/cart">
+        <RouterLink to="/cart">
           <HStack>
             <CgShoppingCart size="24px" />
             <Text>{`(${cart.items.length})`}</Text>
           </HStack>
-        </Link>
+        </RouterLink>
       </HStack>
     </>
   );

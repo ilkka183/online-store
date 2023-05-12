@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import FormInput from "../../components/FormInput";
 import FormHeading from "../../components/FormHeading";
-import LinkButton from "../../components/LinkButton";
+import RouterButton from "../../components/RouterButton";
 import { Address } from "../../api/addressApi";
 
 export default function AddressPage() {
@@ -39,7 +39,7 @@ export default function AddressPage() {
         <Button colorScheme="blue" onClick={() => handleSubmit(onSubmit)}>
           Save
         </Button>
-        <LinkButton to="/account/addressbook">Cancel</LinkButton>
+        <RouterButton to="/account/addressbook">Cancel</RouterButton>
       </HStack>
     </Stack>
   );

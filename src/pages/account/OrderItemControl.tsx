@@ -11,8 +11,9 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { OrderItem } from "../../api/orderApi";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-import LinkImage from "../../components/LinkImage";
+import { useNavigate } from "react-router-dom";
+import RouterImage from "../../components/RouterImage";
+import RouterLink from "../../components/RouterLink";
 
 interface Props {
   item: OrderItem;
@@ -25,11 +26,9 @@ export default function OrderItemControl({ item }: Props) {
   return (
     <Box mb={6}>
       <HStack>
-        <LinkImage src={item.image} boxSize="80px" to={toProductPage} />
+        <RouterImage src={item.image} boxSize="80px" to={toProductPage} />
         <Box>
-          <Link as={RouterLink} to={toProductPage}>
-            {item.title}
-          </Link>
+          <RouterLink to={toProductPage}>{item.title}</RouterLink>
           <Text>Qty: {item.quantity}</Text>
           <HStack mt={2}>
             <Button size="sm">Write review</Button>

@@ -1,5 +1,4 @@
-import { AxiosError } from "axios";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -8,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Link,
   HStack,
   Stack,
   Text,
@@ -19,10 +17,9 @@ import PasswordInput from "./PasswordInput";
 import TextInput from "./TextInput";
 import clientApi, { SignUpData } from "../../api/clientApi";
 import useForm from "../../hooks/useForm";
+import RouterLink from "../../components/RouterLink";
 
 export default function SignUpView() {
-  const navigate = useNavigate();
-
   const { properties, handleSubmit, errors } = useForm<SignUpData>([
     { name: "firstName", required: true },
     { name: "lastName", required: true },
@@ -133,9 +130,9 @@ export default function SignUpView() {
             <Stack pt={6}>
               <Text align={"center"}>
                 Already a user?{" "}
-                <Link color={"blue.400"} as={RouterLink} to="/signin">
+                <RouterLink color={"blue.400"} to="/signin">
                   Sign in
-                </Link>
+                </RouterLink>
               </Text>
             </Stack>
           </Stack>
