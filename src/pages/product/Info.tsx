@@ -1,13 +1,4 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  HStack,
-  Image,
-  Spacer,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import { Product } from "../../api/productApi";
 
 interface Props {
@@ -20,8 +11,9 @@ export default function Info({ product }: Props) {
       <Text fontSize={"2xl"} paddingBottom={3}>
         {product.title}
       </Text>
-      <Text>By {product.title}</Text>
+      <Text>By {product.brand.name}</Text>
       <Text>{12} reviews | 29 & 178</Text>
+      <Text>{product.description}</Text>
     </VStack>
   );
 }

@@ -1,9 +1,5 @@
 import APIClient, { Entity } from "./apiClient";
-
-export interface Category extends Entity {
-  id: number;
-  name: string;
-}
+import { Category } from "./productApi";
 
 class CategoryAPI extends APIClient<Category> {
 }

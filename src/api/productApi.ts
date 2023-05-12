@@ -6,13 +6,24 @@ export interface Rating {
   count: number;
 }
 
+export interface Category extends Entity {
+  id: number;
+  name: string;
+}
+
+export interface Brand extends Entity  {
+  id: number;
+  name: string;
+}
+
 export interface Product extends Entity {
   id: string;
   title: string;
   price: number;
   description: string;
-  categoryId: number;
   image: string;
+  category: Category;
+  brand: Brand;
   rating: Rating;
 }
 

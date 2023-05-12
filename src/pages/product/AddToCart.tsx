@@ -18,7 +18,12 @@ export default function AddToCart({ product }: Props) {
   return (
     <Card>
       <CardBody>
-        <Button>Add to cart</Button>
+        <HStack mb={2}>
+          <Text>Our Price:</Text>
+          <Spacer />
+          <Text>{product.price}&nbsp;€</Text>
+        </HStack>
+        <Button minWidth={200}>Add to cart</Button>
       </CardBody>
     </Card>
   );

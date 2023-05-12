@@ -12,6 +12,7 @@ import { Cart, CartItem } from "../../api/cartApi";
 import { Product } from "../../api/productApi";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
 import RouterImage from "../../components/RouterImage";
+import RouterLink from "../../components/RouterLink";
 
 interface Props {
   cart: Cart;
@@ -79,10 +80,11 @@ export default function ProductCard({
     <Card>
       <RouterImage src={product.image} to={toProductPage} />
       <CardBody>
-        <Heading fontSize="2xl">{product.title}</Heading>
+        <RouterLink to={toProductPage}>
+          <Heading fontSize="2xl">{product.title}</Heading>
+        </RouterLink>
         <Button onClick={handleAddToCart}>Add to cart</Button>
         <Text>{product.price}</Text>
-        <Text>{product.description}</Text>
       </CardBody>
     </Card>
   );
