@@ -9,6 +9,7 @@ import PaymentMethodsPage from "./pages/account/PaymentMethodsPage";
 import CartPage from "./pages/cart/CartPage";
 import SignUpPage from "./pages/client/SignUpPage";
 import HomePage from "./pages/home/HomePage";
+import ProductPage from "./pages/product/ProductPage";
 import SignInPage from "./pages/client/SignInPage";
 import NavBar from "./components/NavBar";
 import { ProductQuery } from "./api/productApi";
@@ -50,6 +51,7 @@ function App() {
         <Routes>
           <Route path="/" element={renderHomePage()} />
           <Route path="/home" element={renderHomePage()} />
+          <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/account/orders" element={<OrdersPage />} />
           <Route
             path="/account/information"

@@ -11,6 +11,7 @@ import {
 import { Cart, CartItem } from "../../api/cartApi";
 import { Product } from "../../api/productApi";
 import useReplaceCart from "../../hooks/cart/useReplaceCart";
+import LinkImage from "../../components/LinkImage";
 
 interface Props {
   cart: Cart;
@@ -26,6 +27,8 @@ export default function ProductCard({
   const clientId = 1;
 
   const { replaceItem } = useReplaceCart(clientId);
+
+  const toProductPage = "/product/" + product.id;
 
   const handleAddToCart = () => {
     if (cart.items.find((item) => item.name == product.title)) {
@@ -74,7 +77,7 @@ export default function ProductCard({
 
   return (
     <Card>
-      <Image src={product.image} />
+      <LinkImage src={product.image} to={toProductPage} />
       <CardBody>
         <Heading fontSize="2xl">{product.title}</Heading>
         <Button onClick={handleAddToCart}>Add to cart</Button>

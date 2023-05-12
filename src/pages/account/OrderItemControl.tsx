@@ -6,23 +6,30 @@ import {
   Flex,
   HStack,
   Image,
+  Link,
   Spacer,
   Text,
 } from "@chakra-ui/react";
 import { OrderItem } from "../../api/orderApi";
-import { Link } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import LinkImage from "../../components/LinkImage";
 
 interface Props {
   item: OrderItem;
 }
 
 export default function OrderItemControl({ item }: Props) {
+  const navigate = useNavigate();
+  const toProductPage = "/product/" + item.productId;
+
   return (
     <Box mb={6}>
       <HStack>
-        <Image src={item.image} boxSize="80px" mr={4} />
+        <LinkImage src={item.image} boxSize="80px" to={toProductPage} />
         <Box>
-          <Text>{item.title}</Text>
+          <Link as={RouterLink} to={toProductPage}>
+            {item.title}
+          </Link>
           <Text>Qty: {item.quantity}</Text>
           <HStack mt={2}>
             <Button size="sm">Write review</Button>

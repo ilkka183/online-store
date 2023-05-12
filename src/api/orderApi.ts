@@ -2,6 +2,7 @@ import APIClient, { Entity } from "./apiClient";
 
 export interface OrderItem {
   id: number;
+  productId: string;
   title: string;
   image: string;
   price: number;

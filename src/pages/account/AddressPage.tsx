@@ -1,5 +1,5 @@
 import { Button, HStack, Stack } from "@chakra-ui/react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../hooks/useForm";
 import FormInput from "../../components/FormInput";
 import FormHeading from "../../components/FormHeading";

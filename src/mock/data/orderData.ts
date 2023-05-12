@@ -9,6 +9,7 @@ const data: Order[] = [
     items: [
       {
         id: 1,
+        productId: "1",
         title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
         image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
         price: 109.95,
@@ -17,6 +18,7 @@ const data: Order[] = [
       },
       {
         id: 2,
+        productId: "2",
         title: "Mens Casual Premium Slim Fit T-Shirts",
         image: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
         price: 22.3,
