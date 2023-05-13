@@ -31,8 +31,8 @@ const data: Product[] = [
       name: "men's clothing"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 2,
+      name: "Casual"
     },
     rating: {
       rate: 4.1,
@@ -69,8 +69,8 @@ const data: Product[] = [
       name: "men's clothing"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 2,
+      name: "Casual"
     },
     rating: {
       rate: 2.1,
@@ -88,8 +88,8 @@ const data: Product[] = [
       name: "jewelery"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 3,
+      name: "Gold"
     },
     rating: {
       rate: 4.6,
@@ -107,8 +107,8 @@ const data: Product[] = [
       name: "jewelery"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 3,
+      name: "Gold"
     },
     rating: {
       rate: 3.9,
@@ -126,8 +126,8 @@ const data: Product[] = [
       name: "jewelery"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 3,
+      name: "Gold"
     },
     rating: {
       rate: 3,
@@ -145,8 +145,8 @@ const data: Product[] = [
       name: "jewelery"
     },
     brand: {
-      id: 1,
-      name: "Fjallraven"
+      id: 4,
+      name: "Rose Cold"
     },
     rating: {
       rate: 1.9,

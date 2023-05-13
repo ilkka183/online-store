@@ -28,16 +28,20 @@ export interface Product extends Entity {
 }
 
 export interface ProductQuery {
+  brandId?: number;
   categoryId?: number;
   minPrice?: number;
   maxPrice?: number;
-  searchText: string;
+  searchText?: string;
 }
 
 class ProductAPI extends APIClient<Product> {
 
   fetchProducts = (query: ProductQuery) => {
     const builder = new QueryBuilder(this.endpoint);
+
+    if (query.brandId)
+      builder.addNumber("brandId", query.brandId);
 
     if (query.categoryId)
       builder.addNumber("categoryId", query.categoryId);

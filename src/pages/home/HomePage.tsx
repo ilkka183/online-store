@@ -1,4 +1,5 @@
 import { Grid, GridItem, Show } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 import CategoryList from "./CategoryList";
 import ProductGrid from "./ProductGrid";
 import { Product, ProductQuery } from "../../api/productApi";
@@ -16,7 +17,20 @@ export default function HomePage({
   productQuery,
   onSelectCategory,
 }: Props) {
-  const { data, error, isLoading } = useProducts(productQuery);
+  const { brandId, categoryId } = useParams();
+  const showSide = !brandId && !categoryId;
+
+  let usedProductQuery: ProductQuery = {};
+
+  if (brandId) {
+    usedProductQuery = { brandId: parseInt(brandId) };
+  } else if (categoryId) {
+    usedProductQuery = { categoryId: parseInt(categoryId) };
+  } else {
+    usedProductQuery = productQuery;
+  }
+
+  const { data, error, isLoading } = useProducts(usedProductQuery);
 
   if (error) return null;
 
@@ -31,7 +45,7 @@ export default function HomePage({
     <Grid
       templateAreas={{
         base: `"nav" "main"`,
-        lg: `"nav nav" "aside main"`,
+        lg: showSide ? `"nav nav" "side main"` : `"nav nav" "main main"`,
       }}
       templateColumns={{
         base: "1fr",
@@ -39,14 +53,16 @@ export default function HomePage({
       }}
     >
       <GridItem area="nav"></GridItem>
-      <Show above="lg">
-        <GridItem area="aside" paddingX={5}>
-          <CategoryList
-            selectedCategoryId={productQuery.categoryId}
-            onSelectCategory={(categoryId) => onSelectCategory(categoryId)}
-          />
-        </GridItem>
-      </Show>
+      {showSide && (
+        <Show above="lg">
+          <GridItem area="side" paddingX={5}>
+            <CategoryList
+              selectedCategoryId={productQuery.categoryId}
+              onSelectCategory={(categoryId) => onSelectCategory(categoryId)}
+            />
+          </GridItem>
+        </Show>
+      )}
       <GridItem area="main">
         <ProductGrid cart={cart} products={products} isLoading={isLoading} />
       </GridItem>

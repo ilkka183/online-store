@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import AccountInformationPage from "./pages/account/AccountInformationPage";
 import OrdersPage from "./pages/account/OrdersPage";
-import MessagesPage from "./pages/account/MessagesPage";
 import AddressBookPage from "./pages/account/AddressBookPage";
 import AddressPage from "./pages/account/AddressPage";
 import PaymentMethodsPage from "./pages/account/PaymentMethodsPage";
@@ -51,6 +50,8 @@ function App() {
         <Routes>
           <Route path="/" element={renderHomePage()} />
           <Route path="/home" element={renderHomePage()} />
+          <Route path="/brands/:brandId" element={renderHomePage()} />
+          <Route path="/categories/:categoryId" element={renderHomePage()} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="/account/orders" element={<OrdersPage />} />
           <Route

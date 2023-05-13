@@ -10,11 +10,11 @@ import RouterLink from "../../components/RouterLink";
 export default function ProductPage() {
   const { id } = useParams();
 
-  if (id === undefined) return;
+  if (id === undefined) return null;
 
   const { data, error, isLoading } = useProduct(id);
 
-  if (data === undefined) return;
+  if (data === undefined) return null;
 
   return (
     <VStack alignItems="left" m={4}>

@@ -15,6 +15,10 @@ export default class ProductController extends Controller<Product> {
 
     let data = table.data;
 
+    if (query.brandId) {
+      data = data.filter(item => item.brand.id.toString() === query.brandId);
+    }
+
     if (query.categoryId) {
       data = data.filter(item => item.category.id.toString() === query.categoryId);
     }
